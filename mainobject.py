@@ -54,9 +54,9 @@ class coordenada:
 ############################################
 
 class tabuleiro:
-	
+
 	def __init__ (self, t):
-		
+
 		# Testa o tuplo
 		if not( isinstance(t, (tuple))
 		        # se o tuplo contem dois tuplos
@@ -71,24 +71,25 @@ class tabuleiro:
 		        and all( isinstance(elem, (int)) for tuplos in t for espec in tuplos for elem in espec )
 		        # se a qtdd especificacoes sao a msm
 		        and len (t[0]) == len(t[1])):
-			
+
 			raise ValueError('cria_tabuleiro: argumentos invalidos')
-	
+
 		# Cria lista com as celulas (com uma linha)
 		cell = [[]]
-		
+
 		# Para cada linha
 		for x in range (len (t[0])):
-			
+
 			# Para cada coluna
 			for y in range (len (t[1])):
-				
+
+
 				# Coloca a 0 a coordenada correspondente
-				cell[y] = cell[y]+[0]
-			
+				cell[x].append (0)
+
 			# Adiciona nova linha
-			cell = cell + []
-	
+			cell.append ([])
+
 		self.espec_linhas = t[0]
 		self.espec_colunas = t[1]
 		self.celulas = cell
@@ -97,22 +98,24 @@ class tabuleiro:
 	# TABULEIRO DIMENSOES
 	########################################
 	def tabuleiro_dimensoes(self):
-		
+
 		# Qtd linhas & colunas
 		linhas = len(self[0])
 		colunas = len(self[1])
-		
+
 		# Devolve dimensoes num tuplo
 		return (linhas, colunas)
-	
+
 	############################################
 	# TABULEIRO ESPECIFICACOES
 	############################################
 	def tabuleiro_especificacoes(self):
-		
+
 		# Qtd linhas & colunas
 		linhas = self[0]
 		colunas = self[1]
-		
+
 		# Devolve dimensoes num tuplo
 		return (linhas, colunas) #teste atributo
+
+		#    z = tabuleiro (((2)
