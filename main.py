@@ -62,53 +62,66 @@ def coordenada_coluna(coord):
 ############################################
 
 ############################################
-# CRIA TABULEIRO
+# CLASSE TABULEIRO
 ############################################
+class tabuleiro:
+	
+	########################################
+	# CONSTRUTOR
+	########################################
+	def __init__(self, t):
+	
+		# Testa o tuplo
+		if not( isinstance(t, (tuple))
+				# se o tuplo contem dois tuplos
+				and all( isinstance(tuplos, (tuple)) for tuplos in t )
+				# se esses tuplos nao sao vazios
+				and all( len(tuplos) > 0 for tuplos in t )
+				# se as especificacoes sao positivas
+				and all( elem > 0 for tuplos in t for espec in tuplos for elem in espec )
+				# se as especificacoes sao inteiras
+				and all( isinstance(elem, (int)) for tuplos in t for espec in tuplos for elem in espec ) ):
+	
+			raise ValueError('cria_tabuleiro: argumentos invalidos')
+	
+		# Qtd linhas & colunas
+		self.linhas = t([0])
+		self.colunas = t([1])
 
-def cria_tabuleiro(t):
+	########################################
+	# TABULEIRO DIMENSOES
+	########################################
+	def tabuleiro_dimensoes(self):
+	
+		# Qtd linhas & colunas
+		linhas = len(self[0])
+		colunas = len(self[1])
+	
+		# Devolve dimensoes num tuplo
+		return (linhas, colunas)
 
-	# Testa o tuplo
-	if not( isinstance(t, (tuple))
-			# se o tuplo contem dois tuplos
-			and all( isinstance(tuplos, (tuple)) for tuplos in t )
-			# se esses tuplos nao sao vazios
-			and all( len(tuplos) > 0 for tuplos in t )
-			# se as especificacoes sao positivas
-			and all( elem > 0 for tuplos in t for espec in tuplos for elem in espec )
-			# se as especificacoes sao inteiras
-			and all( isinstance(elem, (int)) for tuplos in t for espec in tuplos for elem in espec ) ):
+	############################################
+	# TABULEIRO ESPECIFICACOES
+	############################################
+	
+	def tabuleiro_especificacoes(self):
+	
+		# Qtd linhas & colunas
+		linhas = self[0]
+		colunas = self[1]
+	
+		# Devolve dimensoes num tuplo
+		return (linhas, colunas) #teste atributo
 
-		raise ValueError('cria_tabuleiro: argumentos invalidos')
-
-	# Qtd linhas & colunas
-	linhas = tabuleiro_dimensoes([0])
-	colunas = tabuleiro_dimensoes([1])
-
-	# Devolve o tabuleiro num dicionario
-	return {'linhas' : t[0], 'colunas' : t[1] 'celulas' : [[[0]*linhas]*colunas]}
-
-############################################
-# TABULEIRO DIMENSOES
-############################################
-
-def tabuleiro_dimensoes(tab):
-
-	# Qtd linhas & colunas
-	linhas = len(tab['linhas'])
-	colunas = len(tab['colunas'])
-
-	# Devolve dimensoes num tuplo
-	return (linhas, colunas)
-
-############################################
-# TABULEIRO ESPECIFICACOES
-############################################
-
-def tabuleiro_especificacoes(tab):
-
-	# Qtd linhas & colunas
-	linhas = tab['linhas']
-	colunas = tab['colunas']
-
-	# Devolve dimensoes num tuplo
-	return (linhas, colunas) #teste atributo
+	############################################
+	# TABULEIRO CELULA
+	############################################
+	
+	def tabuleiro_celula(self, coordenada, inteiro):
+	
+		# Qtd linhas & colunas
+		linhas = tab['linhas']
+		colunas = tab['colunas']
+	
+		# Devolve dimensoes num tuplo
+		return (linhas, colunas) #teste atributo
