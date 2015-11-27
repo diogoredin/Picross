@@ -89,31 +89,35 @@ class tabuleiro:
 		self.linhas = t([0])
 		self.colunas = t([1])
 
+############################################
+# FUNCOES DO TABULEIRO
+############################################
+
 # TABULEIRO DIMENSOES
 def tabuleiro_dimensoes(t):
 	
 	# Qtd linhas & colunas
-	linhas = len(self.linhas())
-	colunas = len(self.colunas())
+	linhas = len(t.linhas())
+	colunas = len(t.colunas())
 	
 	# Devolve dimensoes num tuplo
 	return (linhas, colunas)
 
 # TABULEIRO ESPECIFICACOES
-def tabuleiro_especificacoes(self):
+def tabuleiro_especificacoes(t):
 	
 	# Linhas & colunas
-	linhas = self.linhas()
-	colunas = self.colunas()
+	linhas = t.linhas()
+	colunas = t.colunas()
 	
 	# Devolve dimensoes num tuplo
 	return (linhas, colunas)
 
 # TABULEIRO CELULA
-def tabuleiro_celula(self, c, n):
+def tabuleiro_celula(t, c, n):
 		
-	# Testa a coordenada e o inteiro
-	if not( isinstance(c, (coordenada)) and isinstance(n, (int)) ):
+	# Testa o tabuleiro, a coordenada e o inteiro
+	if not( isinstance(t, (tabuleiro)) and isinstance(c, (coordenada)) and isinstance(n, (int)) ):
 		raise ValueError('tabuleiro_celula: argumentos invalidos')
 	
 	# Vai buscar coordenadas
