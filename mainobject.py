@@ -25,6 +25,7 @@ class coordenada:
 			raise ValueError('cria_coordenada: argumentos invalidos')
 		self.linha = l
 		self.coluna = c
+
 ############################################
 # COORDENADA LINHA
 ############################################
@@ -53,75 +54,65 @@ class coordenada:
 ############################################
 
 class tabuleiro:
+	
 	def __init__ (self, t):
+		
 		# Testa o tuplo
 		if not( isinstance(t, (tuple))
-				# se o tuplo contem dois tuplos
-				and len(t) = 2
-				# se o os dois elementos sao tuplos
-				and all( isinstance(tuplos, (tuple)) for tuplos in t )
-				# se esses tuplos nao sao vazios
-				and all( len(tuplos) > 0 for tuplos in t )
-				# se as especificacoes sao positivas
-				and all( elem > 0 for tuplos in t for espec in tuplos for elem in espec )
-				# se as especificacoes sao inteiras
-				and all( isinstance(elem, (int)) for tuplos in t for espec in tuplos for elem in espec ) ):
-				and len (t[0])== len(t[1])
+		        # se o tuplo contem dois tuplos
+		        and len(t) == 2
+		        # se o os dois elementos sao tuplos
+		        and all( isinstance(tuplos, (tuple)) for tuplos in t )
+		        # se esses tuplos nao sao vazios
+		        and all( len(tuplos) > 0 for tuplos in t )
+		        # se as especificacoes sao positivas
+		        and all( elem > 0 for tuplos in t for espec in tuplos for elem in espec )
+		        # se as especificacoes sao inteiras
+		        and all( isinstance(elem, (int)) for tuplos in t for espec in tuplos for elem in espec )
+		        # se a qtdd especificacoes sao a msm
+		        and len (t[0]) == len(t[1])):
+			
 			raise ValueError('cria_tabuleiro: argumentos invalidos')
+	
+		# Cria lista com as celulas (com uma linha)
 		cell = [[]]
+		
+		# Para cada linha
 		for x in range (len (t[0])):
-			for x in range (len (t[0])):
-				cell[] = cell[] + [0]
+			
+			# Para cada coluna
+			for y in range (len (t[1])):
+				
+				# Coloca a 0 a coordenada correspondente
+				cell[y] = cell[y]+[0]
+			
+			# Adiciona nova linha
 			cell = cell + []
+	
 		self.espec_linhas = t[0]
 		self.espec_colunas = t[1]
 		self.celulas = cell
-def cria_tabuleiro(t):
 
-	# Testa o tuplo
-	if not( isinstance(t, (tuple))
-			# se o tuplo contem dois tuplos
-			and len(t) = 2
-			# se o os dois elementos sao tuplos
-			and all( isinstance(tuplos, (tuple)) for tuplos in t )
-			# se esses tuplos nao sao vazios
-			and all( len(tuplos) > 0 for tuplos in t )
-			# se as especificacoes sao positivas
-			and all( elem > 0 for tuplos in t for espec in tuplos for elem in espec )
-			# se as especificacoes sao inteiras
-			and all( isinstance(elem, (int)) for tuplos in t for espec in tuplos for elem in espec ) ):
-
-		raise ValueError('cria_tabuleiro: argumentos invalidos')
-
-	# Qtd linhas & colunas
-	linhas = tabuleiro_dimensoes([0])
-	colunas = tabuleiro_dimensoes([1])
-
-	# Devolve o tabuleiro num dicionario
-	return {'linhas' : t[0], 'colunas' : t[1] 'celulas' : [[[0]*linhas]*colunas]}
-
-############################################
-# TABULEIRO DIMENSOES
-############################################
-
-def tabuleiro_dimensoes(tab):
-
-	# Qtd linhas & colunas
-	linhas = len(tab['linhas'])
-	colunas = len(tab['colunas'])
-
-	# Devolve dimensoes num tuplo
-	return (linhas, colunas)
-
-############################################
-# TABULEIRO ESPECIFICACOES
-############################################
-
-def tabuleiro_especificacoes(tab):
-
-	# Qtd linhas & colunas
-	linhas = tab['linhas']
-	colunas = tab['colunas']
-
-	# Devolve dimensoes num tuplo
-	return (linhas, colunas)
+	########################################
+	# TABULEIRO DIMENSOES
+	########################################
+	def tabuleiro_dimensoes(self):
+		
+		# Qtd linhas & colunas
+		linhas = len(self[0])
+		colunas = len(self[1])
+		
+		# Devolve dimensoes num tuplo
+		return (linhas, colunas)
+	
+	############################################
+	# TABULEIRO ESPECIFICACOES
+	############################################
+	def tabuleiro_especificacoes(self):
+		
+		# Qtd linhas & colunas
+		linhas = self[0]
+		colunas = self[1]
+		
+		# Devolve dimensoes num tuplo
+		return (linhas, colunas) #teste atributo
