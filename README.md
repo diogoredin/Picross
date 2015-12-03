@@ -1,7 +1,7 @@
 # Projeto FP - Picross
 TO DO LIST
 
- - COORDENADA:
+  - COORDENADA:
 
         # Métodos:
 
@@ -49,7 +49,6 @@ TO DO LIST
               --> cadeia_de_carateres
               --> __zero
 
-
         # Funções:
 
               --> cria_jogada
@@ -59,8 +58,8 @@ TO DO LIST
               --> jogadas_iguais
               --> jogada_para_cadeia
 
-  # FUNÇÕES ADICIONAIS:
+# FUNÇÕES ADICIONAIS:
 
-        --> le_tabuleiro
-        --> pede_jogada
-        --> jogo_picross
+  --> le_tabuleiro
+  --> pede_jogada
+  --> jogo_picross
