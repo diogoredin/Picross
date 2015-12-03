@@ -1,7 +1,7 @@
 # Projeto FP - Picross
 TO DO LIST
 
-  - COORDENADA:
+  - Coordenada:
 
         # Métodos:
 
