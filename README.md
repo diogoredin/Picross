@@ -1,5 +1,5 @@
-# picross
-TO DO LIST:
+# Projeto FP - Picross
+TO DO LIST
 
  - COORDENADA:
 
@@ -59,7 +59,7 @@ TO DO LIST:
               --> jogadas_iguais
               --> jogada_para_cadeia
 
-  # FUNCÇÕES ADICIONAIS:
+  # FUNÇÕES ADICIONAIS:
 
         --> le_tabuleiro
         --> pede_jogada
