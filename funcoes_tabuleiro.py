@@ -24,4 +24,5 @@ def tabuleiro_especificacoes(tab):
     spec = (spec_linhas, spec_colunas)
     return spec
 
-# def tabuleiro_celula(tab, coord): YET TO FINISH
+ def tabuleiro_celula(tab, coord):
+    

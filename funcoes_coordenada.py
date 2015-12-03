@@ -1,3 +1,13 @@
+class coordenada:
+
+    def __init__ (self, l, c):
+
+        # Testa se são inteiros positivos
+        if not(isinstance(l, (int)) and isinstance(c, (int)) and (l > 0) and (c > 0)):
+            raise ValueError('cria_coordenada: argumentos invalidos')
+        self.linha = l
+        self.coluna = c
+
 def cria_coordenada(linha, coluna):
     return coordenada (linha, coluna)
 
