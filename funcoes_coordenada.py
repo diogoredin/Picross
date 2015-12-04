@@ -14,7 +14,7 @@
 class coordenada:
 
     # Iniciador
-    def __init__ (self, lin, col):
+    def __init__(self, lin, col):
 
         # Testa se sao inteiros positivos
         if not(isinstance(lin, (int)) and isinstance(col, (int)) and (lin > 0) and (col > 0)):
@@ -24,23 +24,23 @@ class coordenada:
         self.linha = lin
         self.coluna = col
 
-    # Igualdade
-    def __eq__(self, coord1, coord2):
+    # Atributo
+    def get_linha(self):
+        return self.linha
 
-        # Testa se recebe dois elementos do tipo jogada
-        if not(isinstance(coord1, (coordenada)) and isinstance(coord2, (coordenada))):
+    # Atributo
+    def get_coluna(self):
+        return self.coluna
+
+    # Igualdade
+    def __eq__(self, coord):
+
+        # Testa se recebe dois elementos do tipo coordenada
+        if not(isinstance(self, (coordenada)) and isinstance(coord, (coordenada))):
             raise ValueError('coordenadas_iguais: argumentos invalidos')
 
         # Igual quando as linhas e colunas são iguais
-        return ( (coord1.linha() == coord2.linha()) and (coord1.coluna() == coord2.coluna()) )
-
-    # Seletor
-    def coluna(self):
-        return self.coluna
-
-    # Seletor
-    def linha(self):
-        return self.linha
+        return ( ( self.get_linha() == coord.get_linha() ) and ( self.get_coluna() == coord.get_coluna()) )
 
 # Construtor
 def cria_coordenada(lin, col): 
@@ -53,13 +53,23 @@ def cria_coordenada(lin, col):
 def coordenada_linha(coord):
     '''coordenada_linha : coordenada -> inteiro
        coordenada_linha(coord) recebe como argumento um elemento do tipo coordenada e devolve a linha respetiva.'''
-    return coord.linha()
+    
+    # Testa se recebe uma coordenada
+    if not( e_coordenada(coord) ):
+        raise ValueError('coordenada_linha: argumentos invalidos')
+
+    return coord.get_linha()
 
 # Seletor
 def coordenada_coluna(coord):
     '''coordenada_coluna : coordenada -> inteiro
        coordenada_coluna(coord) recebe como argumento um elemento do tipo coordenada e devolve a coluna respetiva.'''
-    return coord.coluna()
+    
+    # Testa se recebe uma coordenada
+    if not( e_coordenada(coord) ):
+        raise ValueError('coordenada_coluna: argumentos invalidos')
+
+    return coord.get_coluna()
 
 # Reconhecedor
 def e_coordenada(elem):
@@ -85,4 +95,4 @@ def coordenada_para_cadeia(coord):
         raise ValueError('coordenada_para_cadeia: argumentos invalidos')
 
     # Acedemos a linha e coluna
-    return ( '(' + coord.linha() + ' : ' + coord.coluna + ')' )
+    return ( '(' + str( coordenada_linha(coord) ) + ' : ' + str( coordenada_coluna(coord) ) + ')' )
