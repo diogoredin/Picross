@@ -1,41 +1,37 @@
 # Projeto FP - Picross
+
 TO DO LIST
+
 
   - Coordenada:
 
         # Métodos:
 
-              --> __init__
-              --> igual
-              --> cadeia_de_carateres
-              --> __zero
-
+              --> __init__                       X
+              
         # Funcões:
 
-              --> cria_coordenadas
-              --> coordenada_linha
-              --> coordenada_coluna
-              --> e_coordenada
-              --> coordenadas_iguais
-              --> coordenada_para_cadeia
+              --> cria_coordenadas               X
+              --> coordenada_linha               X
+              --> coordenada_coluna              X
+              --> e_coordenada                   X
+              --> coordenadas_iguais             X
+              --> coordenada_para_cadeia         X
 
   - Tabuleiro:
 
         # Métodos:
 
               --> __init__
-              --> igual
-              --> cadeia_de_carateres
-              --> __zero
 
         # Funções:
 
-              --> cria_tabuleiro
-              --> tabuleiro_dimensões
-              --> tabuleriro_especificacoes
-              --> tabuleiro_celula
+              --> cria_tabuleiro                 X
+              --> tabuleiro_dimensões            X
+              --> tabuleriro_especificacoes      X
+              --> tabuleiro_celula               X
               --> tabuleiro_preenche_celula
-              --> e_tabuleiro
+              --> e_tabuleiro                    
               --> tabuleiro_completo
               --> tabuleiros_iguais
               --> escreve_tabuleiro
@@ -45,9 +41,6 @@ TO DO LIST
         # Métodos:
 
               --> __init__
-              --> igual
-              --> cadeia_de_carateres
-              --> __zero
 
         # Funções:
 
