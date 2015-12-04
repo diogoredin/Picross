@@ -4,7 +4,7 @@
 #
 ####################################################
 
-# Cria tipo joagada
+# Cria tipo jogada
 class jogada:
 
 	# Iniciador
@@ -28,6 +28,14 @@ class jogada:
         # Igual quando as coordenadas e valor de ambos sao iguais
         return ( (jog1.coordenada() == jog2.coordenada()) and (jog1.celula() == jog2.celula()) )
 
+    # Seletor
+    def coordenada(self):
+    	return self.coordenada
+
+   	# Seletor
+    def celula(self):
+    	return self.celula
+
 # Construtor
 def cria_jogada(coord, cel):
 	'''cria_joagada : coordenada x {1,2} -> jogada
@@ -45,19 +53,19 @@ def jogada_coordenada(jog):
 		raise ValueError('jogada_coordenada: argumentos invalidos')
 
 	# Se for devolve coordenada
-	return jogada.coordenada(jog)
+	return jog.coordenada()
 
 # Seletor
 def jogada_valor(jog):
 	'''jogada_valor : jogada -> {1,2}
 	   jogada_valor(cel) recebe como argumento um elemento do tipo jogada e devolve o valor respetivo.'''
 
-	# Testa se recebe uma joagda
+	# Testa se recebe uma jogada
 	if not( e_jogada(jog) ):
 		raise ValueError('jogada_valor: argumentos invalidos')
 
-	# Se for devolve coordenada
-	return jogada.celula(jog)
+	# Se for devolve celula
+	return jog.celula()
 
 # Reconhecedor
 def e_jogada(elem):
@@ -71,10 +79,6 @@ def jogadas_iguais(jog1, jog2):
 	   jogadas_iguais(jog1, jog2) recebe como argumento dois elementos do tipo jogada e devolve True caso esses elementos
 	   correspondam a mesma jogada, e False caso contrario.'''
 
-	# Testa se recebe duas joagdas
-	if not( e_jogada(jog1) and e_jogada(jog2) ):
-		raise ValueError('jogadas_iguais: argumentos invalidos')
-
 	# Se recebe testa igualdade
 	return (jog1 == jog2)
 
@@ -84,7 +88,7 @@ def jogada_para_cadeia(jog):
 	   jogada_para_cadeia(jog) recebe como argumento um elemento do tipo jogada e devolve uma cadeia de caracteres que
 	   a representa.'''
 
-	# Testa se recebe duas joagdas
+	# Testa se recebe duas jogadas
 	if not( e_jogada(jog) ):
 		raise ValueError('jogada_para_cadeia: argumentos invalidos')
 
