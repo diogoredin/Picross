@@ -1,8 +1,12 @@
-####################################################
+##############################################################
 #
-#	TAD JOGADA
+#	JOGADA
+#	- Representa uma jogada a efetuar sobre um tabuleiro
+#	  Cada jogada e composto por uma coordenada e um valor
+#	  igual a 1 ou dois que representa o conteudo de uma
+#	  celula de um tabuleiro de picross.
 #
-####################################################
+##############################################################
 
 # Cria tipo jogada
 class jogada:
@@ -58,7 +62,7 @@ def jogada_coordenada(jog):
 # Seletor
 def jogada_valor(jog):
 	'''jogada_valor : jogada -> {1,2}
-	   jogada_valor(cel) recebe como argumento um elemento do tipo jogada e devolve o valor respetivo.'''
+	   jogada_valor(jog) recebe como argumento um elemento do tipo jogada e devolve o valor respetivo.'''
 
 	# Testa se recebe uma jogada
 	if not( e_jogada(jog) ):
@@ -70,7 +74,7 @@ def jogada_valor(jog):
 # Reconhecedor
 def e_jogada(elem):
 	'''e_jogada : universal -> logico
-	   e_jogada(elemento) recebe um unico argumento e devolve True caso seja do tipo jogada e False caso contrario.'''
+	   e_jogada(elem) recebe um unico argumento e devolve True caso seja do tipo jogada e False caso contrario.'''
 	return isinstance(elem, (jogada))
 
 # Teste
@@ -84,7 +88,7 @@ def jogadas_iguais(jog1, jog2):
 
 # Funcao
 def jogada_para_cadeia(jog):
-	'''jogada_para_cadeia : jogada -> logico
+	'''jogada_para_cadeia : jogada -> cad. caracteres
 	   jogada_para_cadeia(jog) recebe como argumento um elemento do tipo jogada e devolve uma cadeia de caracteres que
 	   a representa.'''
 
