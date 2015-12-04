@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-# Picross
-
-TO DO LIST:
-=======
 # Projeto FP - Picross
+
 TO DO LIST
->>>>>>> 496287844896ca4e93bdc696d918afdba2d2c341
+
 
   - Coordenada:
 
