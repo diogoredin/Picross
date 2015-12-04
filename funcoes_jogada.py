@@ -1,27 +1,93 @@
 ####################################################
 #
-#	CLASSE JOAGADA
+#	TAD JOGADA
 #
 ####################################################
 
+# Cria tipo joagada
 class jogada:
 
-    def __init__ (self, l, c):
+	# Iniciador
+    def __init__(self, coord, cel):
 
-        # Testa se são inteiros positivos
-        if not(isinstance(l, (int)) and isinstance(c, (int)) and (l > 0) and (c > 0)):
+        # Testa se recebe um elemento do tipo coordenada e um inteiro com valor 1 ou 2, correspondente a celula
+        if not(isinstance(coord, (coordenada)) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
             raise ValueError('cria_jogada: argumentos invalidos')
-        self.linha = l
-        self.coluna = c
 
-def cria_jogada:
+        # Acede a coordenada e celula
+        self.coordenada = coord
+        self.celula = cel
 
-def jogada_coordenada:
+    # Igualdade
+    def __eq__(self, jog1, jog2):
 
-def jogada_valor:
+    	# Testa se recebe dois elementos do tipo jogada
+        if not(isinstance(jog1, (jogada)) and isinstance(jog2, (jogada))):
+            raise ValueError('jogadas_iguais: argumentos invalidos')
 
-def e_jogada:
+        # Igual quando as coordenadas e valor de ambos sao iguais
+        return ( (jog1.coordenada() == jog2.coordenada()) and (jog1.celula() == jog2.celula()) )
 
-def jogadas_iguais:
+# Construtor
+def cria_jogada(coord, cel):
+	'''cria_joagada : coordenada x {1,2} -> jogada
+	   cria_jogada(coorde, cel) recebe como argumento um elemento do tipo coordenada e um inteiro com valor 1 ou 2
+	   e verfica a validade dos seus argumentos.'''
+	return jogada(coord, cel)
 
-def jogada_para_cadeia:
+# Seletor
+def jogada_coordenada(jog):
+	'''jogada_coordenada : jogada -> coordenada
+	   jogada_coordenada(jog) recebe como argumento um elemento do tipo jogada e devolve a coordenada respetiva.'''
+
+	# Testa se recebe uma joagda
+	if not( e_jogada(jog) ):
+		raise ValueError('jogada_coordenada: argumentos invalidos')
+
+	# Se for devolve coordenada
+	return jogada.coordenada(jog)
+
+# Seletor
+def jogada_valor(jog):
+	'''jogada_valor : jogada -> {1,2}
+	   jogada_valor(cel) recebe como argumento um elemento do tipo jogada e devolve o valor respetivo.'''
+
+	# Testa se recebe uma joagda
+	if not( e_jogada(jog) ):
+		raise ValueError('jogada_valor: argumentos invalidos')
+
+	# Se for devolve coordenada
+	return jogada.celula(jog)
+
+# Reconhecedor
+def e_jogada(elem):
+	'''e_jogada : universal -> logico
+	   e_jogada(elemento) recebe um unico argumento e devolve True caso seja do tipo jogada e False caso contrario.'''
+	return isinstance(elem, (jogada))
+
+# Teste
+def jogadas_iguais(jog1, jog2):
+	'''jogadas_iguais : jogada x jogada -> logico
+	   jogadas_iguais(jog1, jog2) recebe como argumento dois elementos do tipo jogada e devolve True caso esses elementos
+	   correspondam a mesma jogada, e False caso contrario.'''
+
+	# Testa se recebe duas joagdas
+	if not( e_jogada(jog1) and e_jogada(jog2) ):
+		raise ValueError('jogadas_iguais: argumentos invalidos')
+
+	# Se recebe testa igualdade
+	return (jog1 == jog2)
+
+# Funcao
+def jogada_para_cadeia(jog):
+	'''jogada_para_cadeia : jogada -> logico
+	   jogada_para_cadeia(jog) recebe como argumento um elemento do tipo jogada e devolve uma cadeia de caracteres que
+	   a representa.'''
+
+	# Testa se recebe duas joagdas
+	if not( e_jogada(jog) ):
+		raise ValueError('jogada_para_cadeia: argumentos invalidos')
+
+	# Primeiro acedemos a coordenada da jogada e transformamos numa cadeia de caracteres e depois acedemos a 
+	# celula da jogada
+    return ( coordenada_para_cadeia( jog.coordenada() ) + ' --> ' + jog.celula() )
