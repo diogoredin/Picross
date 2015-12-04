@@ -46,7 +46,7 @@
 class coordenada:
 
     # Iniciador
-    def __init__ (self, lin, col):
+    def __init__(self, lin, col):
 
         # Testa se sao inteiros positivos
         if not(isinstance(lin, (int)) and isinstance(col, (int)) and (lin > 0) and (col > 0)):
@@ -56,23 +56,23 @@ class coordenada:
         self.linha = lin
         self.coluna = col
 
-    # Igualdade
-    def __eq__(self, coord1, coord2):
+    # Atributo
+    def get_linha(self):
+        return self.linha
 
-        # Testa se recebe dois elementos do tipo jogada
-        if not(isinstance(coord1, (coordenada)) and isinstance(coord2, (coordenada))):
+    # Atributo
+    def get_coluna(self):
+        return self.coluna
+
+    # Igualdade
+    def __eq__(self, coord):
+
+        # Testa se recebe dois elementos do tipo coordenada
+        if not(isinstance(self, (coordenada)) and isinstance(coord, (coordenada))):
             raise ValueError('coordenadas_iguais: argumentos invalidos')
 
         # Igual quando as linhas e colunas são iguais
-        return ( (coord1.linha() == coord2.linha()) and (coord1.coluna() == coord2.coluna()) )
-
-    # Seletor
-    def coluna(self):
-        return self.coluna
-
-    # Seletor
-    def linha(self):
-        return self.linha
+        return ( ( self.get_linha() == coord.get_linha() ) and ( self.get_coluna() == coord.get_coluna()) )
 
 # Construtor
 def cria_coordenada(lin, col): 
@@ -85,13 +85,23 @@ def cria_coordenada(lin, col):
 def coordenada_linha(coord):
     '''coordenada_linha : coordenada -> inteiro
        coordenada_linha(coord) recebe como argumento um elemento do tipo coordenada e devolve a linha respetiva.'''
-    return coord.linha()
+    
+    # Testa se recebe uma coordenada
+    if not( e_coordenada(coord) ):
+        raise ValueError('coordenada_linha: argumentos invalidos')
+
+    return coord.get_linha()
 
 # Seletor
 def coordenada_coluna(coord):
     '''coordenada_coluna : coordenada -> inteiro
        coordenada_coluna(coord) recebe como argumento um elemento do tipo coordenada e devolve a coluna respetiva.'''
-    return coord.coluna()
+    
+    # Testa se recebe uma coordenada
+    if not( e_coordenada(coord) ):
+        raise ValueError('coordenada_coluna: argumentos invalidos')
+
+    return coord.get_coluna()
 
 # Reconhecedor
 def e_coordenada(elem):
@@ -117,7 +127,7 @@ def coordenada_para_cadeia(coord):
         raise ValueError('coordenada_para_cadeia: argumentos invalidos')
 
     # Acedemos a linha e coluna
-    return ( '(' + coord.linha() + ' : ' + coord.coluna + ')' )
+    return ( '(' + str( coordenada_linha(coord) ) + ' : ' + str( coordenada_coluna(coord) ) + ')' )
 
 ##############################################################
 #
@@ -143,23 +153,23 @@ class jogada:
         self.coordenada = coord
         self.celula = cel
 
+    # Atributo
+    def get_coordenada(self):
+        return self.coordenada
+
+    # Atributo
+    def get_celula(self):
+        return self.celula
+
     # Igualdade
-    def __eq__(self, jog1, jog2):
+    def __eq__(self, jog):
 
         # Testa se recebe dois elementos do tipo jogada
-        if not(isinstance(jog1, (jogada)) and isinstance(jog2, (jogada))):
+        if not(isinstance(self, (jogada)) and isinstance(jog, (jogada))):
             raise ValueError('jogadas_iguais: argumentos invalidos')
 
         # Igual quando as coordenadas e valor de ambos sao iguais
-        return ( (jog1.coordenada() == jog2.coordenada()) and (jog1.celula() == jog2.celula()) )
-
-    # Seletor
-    def coordenada(self):
-        return self.coordenada
-
-    # Seletor
-    def celula(self):
-        return self.celula
+        return ( ( self.get_coordenada() == jog.get_coordenada() ) and ( self.get_celula() == jog.get_celula() ) )
 
 # Construtor
 def cria_jogada(coord, cel):
@@ -178,7 +188,7 @@ def jogada_coordenada(jog):
         raise ValueError('jogada_coordenada: argumentos invalidos')
 
     # Se for devolve coordenada
-    return jog.coordenada()
+    return jog.get_coordenada()
 
 # Seletor
 def jogada_valor(jog):
@@ -190,7 +200,7 @@ def jogada_valor(jog):
         raise ValueError('jogada_valor: argumentos invalidos')
 
     # Se for devolve celula
-    return jog.celula()
+    return jog.get_celula()
 
 # Reconhecedor
 def e_jogada(elem):
@@ -219,4 +229,4 @@ def jogada_para_cadeia(jog):
 
     # Primeiro acedemos a coordenada da jogada e transformamos numa cadeia de caracteres e depois acedemos a 
     # celula da jogada
-    return ( coordenada_para_cadeia( jog.coordenada() ) + ' --> ' + jog.celula() )
+    return ( str( coordenada_para_cadeia( jogada_coordenada(jog) ) ) + ' --> ' + str( jogada_valor(jog) ) )
