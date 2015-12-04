@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 # Picross
 
 TO DO LIST:
+=======
+# Projeto FP - Picross
+TO DO LIST
+>>>>>>> 496287844896ca4e93bdc696d918afdba2d2c341
 
- - COORDENADA:
+  - Coordenada:
 
         # Métodos:
 
@@ -41,7 +46,6 @@ TO DO LIST:
 
               --> __init__
 
-
         # Funções:
 
               --> cria_jogada
@@ -51,8 +55,8 @@ TO DO LIST:
               --> jogadas_iguais
               --> jogada_para_cadeia
 
-  # FUNCÇÕES ADICIONAIS:
+# FUNÇÕES ADICIONAIS:
 
-        --> le_tabuleiro
-        --> pede_jogada
-        --> jogo_picross
+  --> le_tabuleiro
+  --> pede_jogada
+  --> jogo_picross
