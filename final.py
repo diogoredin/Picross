@@ -1,14 +1,13 @@
-##############################################################
+#######   Diogo Redin 84711 . Diogo Vilela 84710 . G027   ######
+#
 #
 #   JOGO PICROSS - PROJETO II FP
 #   https://en.wikipedia.org/wiki/Nonogram
 #
-#   - Diogo Redin 84711
-#   - Diogo Vilela 84710
 #
-##############################################################
+################################################################
 
-##############################################################
+################################################################
 #
 #   INDEX
 #
@@ -28,9 +27,9 @@
 #     2.5. jogadas_iguais
 #     2.6. jogada_para_cadeia
 #
-##############################################################
+################################################################
 
-##############################################################
+################################################################
 #
 #   COORDENADA
 #   - Utilizado para indexar as celulas do tabuleiro. Cada
@@ -40,7 +39,9 @@
 #     em que a celula (1 : 1) corresponde ao canto superior 
 #     esquerdo do tabuleiro.
 #
-##############################################################
+#   - Repr. Interna -> Criada a estrutura de dados 'coordenada'.
+#
+################################################################
 
 # Cria tipo coordenada
 class coordenada:
@@ -72,7 +73,7 @@ class coordenada:
             raise ValueError('coordenadas_iguais: argumentos invalidos')
 
         # Igual quando as linhas e colunas são iguais
-        return ( ( self.get_linha() == coord.get_linha() ) and ( self.get_coluna() == coord.get_coluna()) )
+        return ( ( self.get_linha() == coord.get_linha() ) and ( self.get_coluna() == coord.get_coluna() ) )
 
 # Construtor
 def cria_coordenada(lin, col): 
@@ -129,7 +130,7 @@ def coordenada_para_cadeia(coord):
     # Acedemos a linha e coluna
     return ( '(' + str( coordenada_linha(coord) ) + ' : ' + str( coordenada_coluna(coord) ) + ')' )
 
-##############################################################
+################################################################
 #
 #   JOGADA
 #   - Representa uma jogada a efetuar sobre um tabuleiro
@@ -137,7 +138,9 @@ def coordenada_para_cadeia(coord):
 #     igual a 1 ou dois que representa o conteudo de uma
 #     celula de um tabuleiro de picross.
 #
-##############################################################
+#   - Repr. Interna -> Criada a estrutura de dados 'jogada'.
+#
+################################################################
 
 # Cria tipo jogada
 class jogada:
@@ -213,8 +216,6 @@ def jogadas_iguais(jog1, jog2):
     '''jogadas_iguais : jogada x jogada -> logico
        jogadas_iguais(jog1, jog2) recebe como argumento dois elementos do tipo jogada e devolve True caso esses elementos
        correspondam a mesma jogada, e False caso contrario.'''
-
-    # Se recebe testa igualdade
     return (jog1 == jog2)
 
 # Funcao
