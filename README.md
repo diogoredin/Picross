@@ -8,7 +8,10 @@ TO DO LIST
         # Métodos:
 
               --> __init__                       X
-              
+              --> get_linha                      X
+              --> get_coluna                     X
+              --> __eq__                         X
+
         # Funcões:
 
               --> cria_coordenadas               X
@@ -22,7 +25,7 @@ TO DO LIST
 
         # Métodos:
 
-              --> __init__
+              --> __init__                       X
 
         # Funções:
 
@@ -30,7 +33,7 @@ TO DO LIST
               --> tabuleiro_dimensões            X
               --> tabuleriro_especificacoes      X
               --> tabuleiro_celula               X
-              --> tabuleiro_preenche_celula
+              --> tabuleiro_preenche_celula      
               --> e_tabuleiro                    
               --> tabuleiro_completo
               --> tabuleiros_iguais
@@ -40,16 +43,19 @@ TO DO LIST
 
         # Métodos:
 
-              --> __init__
+              --> __init__                       X
+              --> get_coordenada                 X
+              --> get_celula                     X
+              --> __eq__                         X
 
         # Funções:
 
-              --> cria_jogada
-              --> jogada_coordenada
-              --> jogada_valor
-              --> e_jogada
-              --> jogadas_iguais
-              --> jogada_para_cadeia
+              --> cria_jogada                    X
+              --> jogada_coordenada              X
+              --> jogada_valor                   X
+              --> e_jogada                       X
+              --> jogadas_iguais                 X
+              --> jogada_para_cadeia             X
 
 # FUNÇÕES ADICIONAIS:
 
