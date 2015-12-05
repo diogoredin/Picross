@@ -33,10 +33,10 @@ TO DO LIST
               --> tabuleiro_dimensões            X
               --> tabuleriro_especificacoes      X
               --> tabuleiro_celula               X
-              --> tabuleiro_preenche_celula      
-              --> e_tabuleiro                    
+              --> tabuleiro_preenche_celula      X
+              --> e_tabuleiro                    X
               --> tabuleiro_completo
-              --> tabuleiros_iguais
+              --> tabuleiros_iguais              X
               --> escreve_tabuleiro
 
   - Jogada:
