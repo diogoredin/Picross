@@ -1,4 +1,4 @@
-##############################################################
+################################################################
 #
 #   COORDENADA
 #   - Utilizado para indexar as celulas do tabuleiro. Cada
@@ -8,7 +8,9 @@
 #     em que a celula (1 : 1) corresponde ao canto superior 
 #     esquerdo do tabuleiro.
 #
-##############################################################
+#   - Repr. Interna -> Criada a estrutura de dados 'coordenada'.
+#
+################################################################
 
 # Cria tipo coordenada
 class coordenada:
@@ -40,7 +42,7 @@ class coordenada:
             raise ValueError('coordenadas_iguais: argumentos invalidos')
 
         # Igual quando as linhas e colunas são iguais
-        return ( ( self.get_linha() == coord.get_linha() ) and ( self.get_coluna() == coord.get_coluna()) )
+        return ( ( self.get_linha() == coord.get_linha() ) and ( self.get_coluna() == coord.get_coluna() ) )
 
 # Construtor
 def cria_coordenada(lin, col): 
