@@ -42,6 +42,9 @@ def tabuleiro_especificacoes(t):
     spec = (spec_linhas, spec_colunas)
     return spec
 
+def tabuleiro_celulas(t):               # funcao opcional
+    return t.celulas
+
 # t e o tabuleiro
 def tabuleiro_dimensoes(t):
     # Vai buscar as especificacoes do tabuleiro
@@ -64,7 +67,7 @@ def tabuleiro_dimensoes(t):
 def tabuleiro_celula(t, c):
     linha = coordenada_linha(c)
     coluna = coordenada_coluna(c)
-    celulas = t.celulas
+    celulas = tabuleiro_celulas(t)
     valor_celula = celulas[linha[coluna]]
 
     return valor_celula
@@ -73,7 +76,7 @@ def tabuleiro_celula(t, c):
 def tabuleiro_preenche_celula(t, c, e):
     linha = coordenada_linha(c)
     coluna = coordenada_coluna(c)
-    celulas = t.celulas
+    celulas = tabuleiro_celulas(t)
     celulas = e
     return t
 
@@ -85,6 +88,7 @@ def e_tabuleiro(t):
 def tabuleiros_iguais(t1, t2):
     spec1 = tabuleiro_especificacoes(t1)
     spec2 = tabuleiro_especificacoes(t2)
-    celulas1 = t.celulas
-    celulas2 = t.celulas
+    celulas1 = tabuleiro_celulas(t1)
+    celulas2 = tabuleiro_celulas(t2)
     return (spec1 == spec2 and celulas1 == celulas2)
+
