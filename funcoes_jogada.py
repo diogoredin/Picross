@@ -1,4 +1,4 @@
-##############################################################
+################################################################
 #
 #   JOGADA
 #   - Representa uma jogada a efetuar sobre um tabuleiro
@@ -6,7 +6,9 @@
 #     igual a 1 ou dois que representa o conteudo de uma
 #     celula de um tabuleiro de picross.
 #
-##############################################################
+#   - Repr. Interna -> Criada a estrutura de dados 'jogada'.
+#
+################################################################
 
 # Cria tipo jogada
 class jogada:
@@ -82,8 +84,6 @@ def jogadas_iguais(jog1, jog2):
     '''jogadas_iguais : jogada x jogada -> logico
        jogadas_iguais(jog1, jog2) recebe como argumento dois elementos do tipo jogada e devolve True caso esses elementos
        correspondam a mesma jogada, e False caso contrario.'''
-
-    # Se recebe testa igualdade
     return (jog1 == jog2)
 
 # Funcao
