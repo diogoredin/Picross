@@ -62,3 +62,5 @@ TO DO LIST
   --> le_tabuleiro
   --> pede_jogada
   --> jogo_picross
+  --> tabuleiro_celulas_vazias
+  --> linha_completa
