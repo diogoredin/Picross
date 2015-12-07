@@ -19,7 +19,7 @@ class coordenada:
     def __init__(self, lin, col):
 
         # Testa se sao inteiros positivos
-        if not(isinstance(lin, (int)) and isinstance(col, (int)) and (lin > 0) and (col > 0)):
+        if not(isinstance(lin, (int)) and isinstance(col, (int)) and ((lin > 0) and (col > 0))):
             raise ValueError('cria_coordenada: argumentos invalidos')
 
         # Acede a coluna e linha
