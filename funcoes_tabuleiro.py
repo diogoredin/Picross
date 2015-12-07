@@ -32,12 +32,19 @@ class tabuleiro:
     def get_celulas (self):
         return self.celulas
 
+    # !!!!alkjasjsado!!!!
+    def mod_celula (self, coord, value):
+        linha = coordenada_linha(coord)
+        coluna = coordenada_coluna(coord)
+        self.celulas[linha - 1][coluna -1] = value
+        return self
+
     # Igualdade
     def __eq__ (self, tab):
             spec1 = tabuleiro_especificacoes(self)
             spec2 = tabuleiro_especificacoes(tab)
-            celulas1 = tabuleiro_celulas(self)
-            celulas2 = tabuleiro_celulas(tab)
+            celulas1 = tabuleiro_celula(self)
+            celulas2 = tabuleiro_celula(tab)
             return (spec1 == spec2 and celulas1 == celulas2)
 
 
@@ -93,14 +100,14 @@ def tabuleiro_especificacoes(tab):
     return spec
 
 # Seletor
-def tabuleiro_celulas(tab):
+def tabuleiro_celula(tab):
     '''tabuleiro_celulas : tabuleiro -> list 
     tabuleiro_celulas(tab) recebe como argumento um objeto do tipo tabuleiro e
     devolve uma lista constituida por listas com os valores que estao 
     em cada celula do tabuleiro'''
     # Testa se o argumento e do tipo tabuleiro
     if not e_tabuleiro(tab):
-        raise ValueError('tabuleiro_celulas: argumentos invalidos')
+        raise ValueError('tabuleiro_celulas: argumento invalidos')
    
     # Se for tabuleiro:
     # Obtem a lista com os valores das celulas
@@ -127,12 +134,12 @@ def tabuleiro_celulas_linha(tab, line):
     dimensoes = tabuleiro_dimensoes(tab)
     qtd_linhas = dimensoes[0]
     if not (line => 0)
-        and ((qtd_linhas - 1) => line):
+            and ((qtd_linhas - 1) => line):
         raise ValueError('tabuleiro_celulas_linha: linha fora do tabuleiro')
 
     # Se os argumentos introduzidos sao validos:
     # Obtem os valores de todas as celulas do tabuleiro
-    celulas = tabuleiro_celulas (tab)
+    celulas = tabuleiro_celula (tab)
     # Dos valores obtidos, obtem os valores das celulas da linha selecionada
     valores_linha = celulas[line]
     # Devolve a lista com os valores obtidos
@@ -147,39 +154,95 @@ def tabuleiro_dimensoes(tab):
     com o numero de colunas no segundo'''
     # Testa se o argumento tab e do tipo tabuleiro
     if not e_tabuleiro(tab)
-        raise ValueError('tabuleiro_celulas_linha: tabuleiro invalido')
+        raise ValueError('tabuleiro_celulas_linha: argumento invalido')
 
+    # Se for tabuleiro:
+    # Obtem as especificacoes do tabuleiro num tuplo
     spec = tabuleiro_especificacoes(tab)
+    # Das especificacoes, obtem o primeiro elemento que contem as especificacoes 
+    # das linhas, e determina o seu tamanho, que corresponde ao numero de linhas
     dimensao_linhas = len(spec[0])
+    # Procede da mesma maneira mas para o segundo elemento das especificacoes
+    # que corresponde as colunas
     dimensao_colunas = len(spec[1])
+    # Com os valores obtidos cria um tuplo com o numero de linhas no primeiro
+    # elemento e com o numero de colunas no segundo
     dimensoes = (dimensao_linhas, dimensao_colunas)
+    # Devolve o tuplo criado
     return dimensoes
 
-# t e o tabuleiro, c e a coordenada
+# Seletor:
 def tabuleiro_celula(tab, coord):
-    linha = coordenada_linha(coord)
-    coluna = coordenada_coluna(coord)
-    celulas = tabuleiro_celulas(tab)
-    valor_celula = celulas[linha[coluna]]
+    '''tabuleiro_celula : tabuleiro x coordenada -> {0, 1, 2}
+    tabuleiro_celula(tab, coord) recebe como argumentos um objeto do 
+    tipo tabuleiro e um objeto do tipo coordenada e devolve um inteiro
+    compreendido entre 0 e 2, correspondente ao valor contido na celula
+    do tabuleiro na coordenada indicada'''
 
+    # Testa se o argumento tab e do tipo tabuleiro
+    if not (e_tabuleiro(tab)
+            # Testa se o argumento coord e do tipo coordenada
+            and e_coordenada(coord)):
+        raise ValueError('tabuleiro_celula: argumentos invalidos')
+
+    # Se os argumentos forem validos:
+    # Obtem a linha da celula que se quer o valor
+    linha = coordenada_linha(coord)
+    # Obtem a coluna da celula que se quer o valor
+    coluna = coordenada_coluna(coord)
+    # Obtem o valor de todas as celulas do tabuleiro numa lista
+    celulas = tabuleiro_celula(tab)
+    # Da lista obtido, seleciona o valor correspondente a coordenada escolhida
+    valor_celula = celulas[linha -1 [coluna - 1]]
+    # Devolve o valor da celula pretendida
     return valor_celula
 
-# t e o tabuleiro, c e a coordenada, e e o valor a preencher
+# Modificador
 def tabuleiro_preenche_celula(tab, coord, value):
-    linha = coordenada_linha(coord)
-    coluna = coordenada_coluna(coord)
-   # tabuleiro_celulas(tab) = value
-    return t
+    '''tabuleiro_preenche_celula : tabuleiro x coordenada x {0, 1, 2} -> tabuleiro
+    tabuleiro_preenche_celula(tab, coord, value) recebe como argumentos um objeto do
+    tipo tabuleiro, um objeto do tipo coordenada e um argumento do tipo inteiro compreendido
+    entre 0 e 2 e devolve um tabuleiro com a celula corresponde a coordenada indicada com o 
+    valor escolhido'''
+    valores_possiveis = (0, 1, 2)
+    if not  (e_tabuleiro(tab)
+            and e_coordenada(coord)
+            and value in valores_possiveis):
+        raise ValueError('tabuleiro_preenche_celula: argumentos invalidos')
+
+    # Se os argumentos forem validos:
+    # Chama o metodo mod_celula de modo a alterar a celula e 
+    # retorna o tabuleiro alterado
+    return tab.mod_celula()
 
 
 
 def tabuleiro_completo(tab):
+    '''tabuleiro_completo : tabuleiro -> logico
+    tabuleiro_completo(tab) recebe como argumento um objeto do tipo 
+    tabuleiro e devolve True se o tabuleiro estiver com todas as celulas
+    preenchidas e com as celulas preenchidas conforme as especificacoes, 
+    caso contrario devolve False'''
+
+    # Testa se o argumento e do tipo tabuleiro
+    if not e_tabuleiro(tab):
+        raise ValueError('tabuleiro_completo: argumento invalido')
+
+    # Se for do tipo tabuleiro:
+    # Obtem uma lista com as celulas que ainda estao por preencher
     celulas_vazias = tabuleiro_celulas_vazias(tab)
+    # Testa se a lista das celulas por preencher esta vazia
     if celulas_vazias != []:
+        # Se a lista tiver elementos significa que o tabuleiro
+        # ainda nao esta completo e portanto retorna False
         return False
-    dimensoes = tabuleiro_dimensoes (tab)
+    # Se o tabuleiro tiver todas as celulas preenchidas:
+    # Obtem um tuplo com as dimensoes do tabuleiro
+    dimensoes = tabuleiro_dimensoes(tab)
     qtd_linha = dimensoes[0]
-    especificacoes = tabuleiro_especificacoes (tab)
+    # Obtem um tuplo com as espeficicacoes do tabuleiro
+    especificacoes = tabuleiro_especificacoes(tab)
+    # Do tuplo obtido, obtem as especificacoes das linhas
     especificacoes_linhas = especificacoes[0]
 
     for linha in range (len(qtd_linha)):
@@ -194,13 +257,13 @@ def tabuleiro_completo(tab):
 def tabuleiros_iguais(tab1, tab2):
     spec1 = tabuleiro_especificacoes(t1)
     spec2 = tabuleiro_especificacoes(t2)
-    celulas1 = tabuleiro_celulas(t1)
-    celulas2 = tabuleiro_celulas(t2)
+    celulas1 = tabuleiro_celula(t1)
+    celulas2 = tabuleiro_celula(t2)
     return (spec1 == spec2 and celulas1 == celulas2)
-
+# lkmas  kmkkm jsan
 
 def tabuleiro_celulas_vazias(tab):
-    celulas = tabuleiro_celulas(tab)
+    celulas = tabuleiro_celula(tab)
     dimensoes = tabuleiro_dimensoes(tab)
     qtd_linhas = dimensoes[0]
     qtd_colunas = dimensoes[1]
@@ -208,7 +271,6 @@ def tabuleiro_celulas_vazias(tab):
     for linha in range (qtd_linhas):
         for coluna in range (qtd_colunas):
             conteudo = celulas[linha][coluna]
-            print (conteudo)
             if conteudo == 0:
                 coord = coordenada(linha + 1, coordenada + 1)
                 celulas_vazias.append (coord)
