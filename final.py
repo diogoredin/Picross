@@ -65,16 +65,6 @@ class coordenada:
     def get_coluna(self):
         return self.coluna
 
-    # Igualdade
-    def __eq__(self, coord):
-
-        # Testa se recebe dois elementos do tipo coordenada
-        if not(isinstance(self, (coordenada)) and isinstance(coord, (coordenada))):
-            raise ValueError('coordenadas_iguais: argumentos invalidos')
-
-        # Igual quando as linhas e colunas são iguais
-        return ( ( self.get_linha() == coord.get_linha() ) and ( self.get_coluna() == coord.get_coluna() ) )
-
 # Construtor
 def cria_coordenada(lin, col): 
     '''cria_coordenada  : int x int -> coordenada
@@ -115,7 +105,12 @@ def coordenadas_iguais(coord1, coord2):
     '''coordenadas_iguais : coordenada x coordenada -> logico
        coordenadas_iguais(coord1, coord2) recebe como argumento dois elementos do tipo coordenada e devolve True caso 
        esses elementos correspondam a mesma coordenada, e False caso contrario.'''
-    return (coord1 == coord2)
+
+    # Testa se recebe uma coordenada
+    if not( e_coordenada(coord1) and e_coordenada(coord2) ):
+        raise ValueError('coordenadas_iguais: argumentos invalidos')
+
+    return ( ( coordenada_linha(coord1) == coordenada_linha(coord2) ) and ( coordenada_coluna(coord1) == coordenada_coluna(coord2) ) )
 
 # Funcao
 def coordenada_para_cadeia(coord):
@@ -164,16 +159,6 @@ class jogada:
     def get_celula(self):
         return self.celula
 
-    # Igualdade
-    def __eq__(self, jog):
-
-        # Testa se recebe dois elementos do tipo jogada
-        if not(isinstance(self, (jogada)) and isinstance(jog, (jogada))):
-            raise ValueError('jogadas_iguais: argumentos invalidos')
-
-        # Igual quando as coordenadas e valor de ambos sao iguais
-        return ( ( self.get_coordenada() == jog.get_coordenada() ) and ( self.get_celula() == jog.get_celula() ) )
-
 # Construtor
 def cria_jogada(coord, cel):
     '''cria_joagada : coordenada x {1,2} -> jogada
@@ -216,7 +201,12 @@ def jogadas_iguais(jog1, jog2):
     '''jogadas_iguais : jogada x jogada -> logico
        jogadas_iguais(jog1, jog2) recebe como argumento dois elementos do tipo jogada e devolve True caso esses elementos
        correspondam a mesma jogada, e False caso contrario.'''
-    return (jog1 == jog2)
+
+    # Testa se recebe dois elementos do tipo jogada
+    if not(isinstance(jog1, (jogada)) and isinstance(jog2, (jogada))):
+        raise ValueError('jogadas_iguais: argumentos invalidos')
+
+    return ( ( jogada_coordenada(jog1) == jogada_coordenada(jog2) ) and ( jogada_valor(jog1) == jogada_valor(jog2) ) )
 
 # Funcao
 def jogada_para_cadeia(jog):
@@ -305,18 +295,6 @@ class tabuleiro:
     def get_celulas(self):
         return self.celulas
 
-    # Igualdade
-    def __eq__(self, tab):
-
-        # Testa se recebe dois elementos do tipo tabuleiro
-        if not(isinstance(self, (tabuleiro)) and isinstance(tab, (tabuleiro))):
-            raise ValueError('tabuleiros_iguais: argumentos invalidos')
-
-        # Igual quando as linhas, colunas e celulas sao iguais
-        return ( ( self.get_linhas() == tab.get_linhas() ) and
-                 ( self.get_linhas() == tab.get_linhas() ) and 
-                 ( self.get_celulas() == tab.get_celulas() ) )
-
 # Construtor
 def cria_tabuleiro(t):
     '''cria_tabuleiro : tuplo -> tabuleiro
@@ -385,6 +363,10 @@ def tabuleiro_celula(t, c):
        tipo coordenada e devolve um elemento do tipo inteiro entre 0 e 2, que corresponde ao valor contido na 
        celula do tabuleiro referente a coordenada c. 0 - celula vazia / 1 - celula branca / 2 - celula preenchida.'''
 
+    # Testa se recebe argumentos corretos
+    if not( e_tabuleiro(t) and e_coordenada(c) ):
+        raise ValueError('tabuleiro_celula: argumentos invalidos')
+
     # Acede a linha e coluna da coordenada dada
     linha = coordenada_linha(c)
     coluna = coordenada_coluna(c)
@@ -404,6 +386,10 @@ def tabuleiro_preenche_celula(t, c, e):
        coordenada e um inteiro e entre 0 e 2, e modifica o tabuleiro t, preenchendo a celula referente a coordenada c 
        com o elemento e, que pode ser 0, 1 ou 2. 0 - celula vazia / 1 - celula branca / 2 - celula preenchida. Devolve
        o tabuleiro modificado na celula especificada.'''
+
+    # Testa se recebe argumentos corretos
+    if not( e_tabuleiro(t) and e_coordenada(c) and e in (0,1,2) ):
+        raise ValueError('tabuleiro_preenche_celula: argumentos invalidos')
 
     # Acede a linha e coluna da coordenada dada
     linha = coordenada_linha(c)
@@ -456,7 +442,15 @@ def tabuleiros_iguais(t1, t2):
     '''tabuleiros_iguais : tabuleiro x tabuleiro -> logico
        tabuleiros_iguais(t1, t2) recebe como argumento dois elementos do tipo tabuleiro e devolve True caso esses elementos
        correspondam ao mesmo tabuleiro, e False caso contrario.'''
-    return (t1 == t2)
+
+    # Testa se recebe tabuleiro
+    if not( e_tabuleiro(t1) and e_tabuleiro(t2)):
+        raise ValueError('tabuleiros_iguais: argumentos invalidos')
+
+    # Igual quando as linhas, colunas e celulas sao iguais
+    return ( ( tabuleiro_especificacoes(t1)[0] == tabuleiro_especificacoes(t2)[0] ) and
+             ( tabuleiro_especificacoes(t1)[1] == tabuleiro_especificacoes(t2)[1] ) and 
+             ( tabuleiro_celulas(t1) == tabuleiro_celulas(t2) ) )
 
 # Funcao
 def escreve_tabuleiro(t):
@@ -543,6 +537,8 @@ def escreve_tabuleiro(t):
         # Proxima linha
         print(nova_linha + '|')
 
+    print('')
+
 ################################################################
 #
 #   FUNCOES ADICIONAIS
@@ -586,12 +582,12 @@ def pede_jogada(t):
     coordenada_min = coordenada_para_cadeia(cria_coordenada(1,1))
     coordenada_max = coordenada_para_cadeia(cria_coordenada(tabuleiro_dimensoes(t)[0],tabuleiro_dimensoes(t)[1]))
 
-    print('Introduza a jogada:')
+    print('Introduza a jogada')
     coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
     valor = input('- valor >> ')
 
     while coordenada == '' or valor == '' or int(valor) not in (1,2):
-        print('Jogada invalida.\nIntroduza a jogada:')
+        print('Jogada invalida.\nIntroduza a jogada')
         coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
         valor = input('- valor >> ')
 
