@@ -27,6 +27,24 @@
 #     2.5. jogadas_iguais
 #     2.6. jogada_para_cadeia
 #
+#   3. Tabuleiro
+#     3.1. cria_tabuleiro
+#     3.2. tabuleiro_dimensões
+#     3.3. tabuleriro_especificacoes
+#     3.4. tabuleiro_celula
+#     3.5. tabuleiro_preenche_celula
+#     3.6. e_tabuleiro
+#     3.7. tabuleiro_completo
+#     3.8. tabuleiros_iguais
+#     3.9. escreve_tabuleiro
+#
+#   4. Funcoes Adicionais
+#     4.1. le_tabuleiro
+#     4.2. pede_jogada
+#     4.3. tabuleiro_celulas_vazias
+#     4.4. linha_completa
+#     4.5. jogo_picross
+#
 ################################################################
 
 ################################################################
@@ -227,10 +245,7 @@ def jogada_para_cadeia(jog):
 ################################################################
 #
 #   TABULEIRO
-#   - Representa uma jogada a efetuar sobre um tabuleiro
-#     Cada jogada e composto por uma coordenada e um valor
-#     igual a 1 ou dois que representa o conteudo de uma
-#     celula de um tabuleiro de picross.
+#   - Representa um tabuleiro de picross.
 #
 #   - Repr. Interna -> Criada a estrutura de dados 'tabuleiro'.
 #
@@ -551,9 +566,9 @@ def escreve_tabuleiro(t):
 #   FUNCOES ADICIONAIS
 #   - le_tabuleiro
 #   - pede_jogada
-#   - jogo_picross
 #   - tabuleiro_celulas_vazias
 #   - linha_completa
+#   - jogo_picross
 #
 ################################################################
 
