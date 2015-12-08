@@ -609,12 +609,10 @@ def pede_jogada(t):
     col = int(argumentos[1])
 
     # Se for valida para o tabuleiro criamos jogada
-    if ( 0 < lin < linha_max+1 and 
-         0 < col < coluna_max+1 and 
-         valor in (0,1,2) ):
+    if ( 0 < lin < linha_max+1 and 0 < col < coluna_max+1 ):
         return cria_jogada(cria_coordenada(lin,col),valor)
     else:
-        False
+        return False
 
 # Funcao tabuleiro celulas vazias
 def tabuleiro_celulas_vazias(t):
@@ -673,7 +671,7 @@ def jogo_picross(espec):
 
         # Enquanto nao houver jogada valida nao atualiza tabuleiro
         while jogada == False:
-            print('Jogada invalida.\nIntroduza a jogada')
+            print('Jogada invalida.')
             jogada = pede_jogada(tabuleiro)
         else:
             coordenada = jogada_coordenada(jogada)
