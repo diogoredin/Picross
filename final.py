@@ -238,7 +238,7 @@ def jogada_para_cadeia(jog):
 class tabuleiro:
 
     # Iniciador
-    def __init__(self, t, cel):
+    def __init__(self, t):
 
         # exemplo do t - ( ( (0,0),(0,0),(0,0) ), ( (0,0),(0,0),(0,0) ) )
         # corresponde a especificacoes do tabuleiro em cada tuplo
@@ -253,16 +253,6 @@ class tabuleiro:
 
         # se o argumento t e um tuplo
         if not( isinstance(t, (tuple))
-                # se as celulas sao lista
-                and isinstance(cel, (list))
-                # se as linhas sao lista
-                and all( isinstance(linhas, (list)) for linhas in cel )
-                # se as celulas sao 0, 1, 2
-                and all( celulas in (0,1,2) for linhas in cel for celulas in linhas )
-                # se o numero de listas construidos e o correto (uma lista por cada linha)
-                and len(cel) == len(t[0])
-                # se o numero de celulas construidos e o correto (uma celula por cada coluna)
-                and all( len(linhas) == len(t[1]) for linhas in cel )
                 # se o tuplo t contem dois tuplos
                 and len(t) == 2
                 # se os elementos do tuplo sao tuplos
@@ -281,7 +271,7 @@ class tabuleiro:
         # Criamos linhas, colunas e celulas conforme o tuplo recebido
         self.linhas = tuple(t[0])
         self.colunas = tuple(t[1])
-        self.celulas = cel
+        self.celulas = [[0 for linha in range(len(t[0]))] for coluna in range(len(t[1]))]
 
     # Atributo
     def get_linhas(self):
@@ -295,17 +285,17 @@ class tabuleiro:
     def get_celulas(self):
         return self.celulas
 
+    # Modificador
+    def preenche_celula(self, linha, coluna, e):
+        self.celulas[linha-1][coluna-1] = e
+        return self
+
 # Construtor
 def cria_tabuleiro(t):
     '''cria_tabuleiro : tuplo -> tabuleiro
        cria_tabuleiro(t) recebe como argumento um elemento t do tipo tuplo descrevendo a especificacao das 
        linhas e das colunas do tabuleiro, e devolve um elemento do tipo tabuleiro.'''
-
-    # Cria lista para cada linha, e cria um elemento a 0 por cada coluna (tabuleiro vazio)
-    # exemplo de tabuleiro 3x3: [[0,0,0],[0,0,0],[0,0,0]]
-    cel = [[0 for linha in range(len(t[0]))] for coluna in range(len(t[1]))]
-
-    return tabuleiro(t, cel)
+    return tabuleiro(t)
 
 # Seletor
 def tabuleiro_especificacoes(t):
@@ -313,6 +303,10 @@ def tabuleiro_especificacoes(t):
        tabuleiro_especificacoes(t) recebe como argumento um elemento t do tipo tabuleiro e devolve um tuplo composto 
        por dois tuplos de tuplos de inteiros, cujo primeiro elemento corresponde a especificacao das linhas 
        e o segundo a especificacao das colunas.'''
+
+    # Testa se recebe argumentos corretos
+    if not( e_tabuleiro(t) ):
+        raise ValueError('tabuleiro_especificacoes: argumentos invalidos')
 
     # Acede linhas e colunas do tabuleiro
     spec_linhas = t.get_linhas()
@@ -330,7 +324,16 @@ def tabuleiro_celulas(t):
        tabuleiro_celulas(t) recebe como argumento um elemento t do tipo tabuleiro e devolve uma lista composta 
        por tantas listas quantas linhas o tabuleiro tiver. Cada lista contem o valor das celulas correspondentes a
        respetiva linha.'''
-    return t.get_celulas()
+    
+    # Testa se recebe argumentos corretos
+    if not( e_tabuleiro(t) ):
+        raise ValueError('tabuleiro_celulas: argumentos invalidos')
+
+    # Acede celulas do tabuleiro
+    celulas = t.get_celulas()
+
+    # Retorna lista com celulas
+    return [[elemento for elemento in linha] for linha in celulas]
 
 # Seletor
 def tabuleiro_dimensoes(t):
@@ -338,6 +341,10 @@ def tabuleiro_dimensoes(t):
        tabuleiro_dimensoes(t) recebe como argumento um elemento t do tipo tabuleiro e devolve um tuplo 
        com dois elementos, cujo primeiro elemento e o numero de linhas do tabuleiro e o segundo o numero 
        de colunas do mesmo.'''
+
+    # Testa se recebe argumentos corretos
+    if not( e_tabuleiro(t) ):
+        raise ValueError('tabuleiro_dimensoes: argumentos invalidos')
 
     # Vai buscar as especificacoes do tabuleiro
     # spec vai ser um tuplo com as especificacoes das linhas na
@@ -363,13 +370,19 @@ def tabuleiro_celula(t, c):
        tipo coordenada e devolve um elemento do tipo inteiro entre 0 e 2, que corresponde ao valor contido na 
        celula do tabuleiro referente a coordenada c. 0 - celula vazia / 1 - celula branca / 2 - celula preenchida.'''
 
-    # Testa se recebe argumentos corretos
+    # Testa se recebe tabuleiro e coordenada
     if not( e_tabuleiro(t) and e_coordenada(c) ):
         raise ValueError('tabuleiro_celula: argumentos invalidos')
 
-    # Acede a linha e coluna da coordenada dada
+    linha_max = tabuleiro_dimensoes(t)[0]
+    coluna_max = tabuleiro_dimensoes(t)[1]
+
     linha = coordenada_linha(c)
     coluna = coordenada_coluna(c)
+
+    # Testa se coordenada esta dentro do tabuleiro
+    if not( 0 < linha < linha_max+1 and 0 < coluna < coluna_max+1 ):
+        raise ValueError('tabuleiro_celula: argumentos invalidos')
 
     # Cria lista com celulas do tabuleiro
     celulas = tabuleiro_celulas(t)
@@ -391,18 +404,17 @@ def tabuleiro_preenche_celula(t, c, e):
     if not( e_tabuleiro(t) and e_coordenada(c) and e in (0,1,2) ):
         raise ValueError('tabuleiro_preenche_celula: argumentos invalidos')
 
-    # Acede a linha e coluna da coordenada dada
+    linha_max = tabuleiro_dimensoes(t)[0]
+    coluna_max = tabuleiro_dimensoes(t)[1]
+
     linha = coordenada_linha(c)
     coluna = coordenada_coluna(c)
 
-    # Cria lista com celulas do tabuleiro
-    celulas = tabuleiro_celulas(t)
+    # Testa se coordenada esta dentro do tabuleiro
+    if not( 0 < linha < linha_max+1 and 0 < coluna < coluna_max+1 ):
+        raise ValueError('tabuleiro_preenche_celula: argumentos invalidos')
 
-    # Guarda na posicao especificada o novo elemento
-    celulas[linha-1][coluna-1] = e
-
-    # Cria novo tabuleiro com as mesmas especificacoes e celula alterada
-    return tabuleiro(tabuleiro_especificacoes(t), celulas)
+    return t.preenche_celula(linha,coluna,e)
 
 # Reconhecedor
 def e_tabuleiro(t):
@@ -423,19 +435,12 @@ def tabuleiro_completo(t):
     # Cria lista com celulas do tabuleiro
     celulas = tabuleiro_celulas(t)
 
-    # Especificacoes linhas e colunas
-    linhas = tabuleiro_especificacoes(t)[0]
-    colunas = tabuleiro_especificacoes(t)[1]
-
-    qtd_linhas = tabuleiro_dimensoes(t)[0]
-    qtd_colunas = tabuleiro_dimensoes(t)[1]
-
     if not( # Testa se ha celulas vazias
             len(tabuleiro_celulas_vazias(t)) == 0
             ):
-        return False
-    else:
         return True
+    else:
+        return False
 
 # Teste
 def tabuleiros_iguais(t1, t2):
@@ -579,23 +584,37 @@ def pede_jogada(t):
     if not(e_tabuleiro(t)):
         raise ValueError('pede_jogada: argumentos invalidos')
 
+    linha_max = tabuleiro_dimensoes(t)[0]
+    coluna_max = tabuleiro_dimensoes(t)[1]
     coordenada_min = coordenada_para_cadeia(cria_coordenada(1,1))
-    coordenada_max = coordenada_para_cadeia(cria_coordenada(tabuleiro_dimensoes(t)[0],tabuleiro_dimensoes(t)[1]))
+    coordenada_max = coordenada_para_cadeia(cria_coordenada(linha_max,coluna_max))
 
+    # Pede jogada ao utilizador
     print('Introduza a jogada')
     coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
     valor = input('- valor >> ')
 
-    while coordenada == '' or valor == '' or int(valor) not in (1,2):
-        print('Jogada invalida.\nIntroduza a jogada')
+    # Enquanto nao for introduzida a jogada
+    while (coordenada == '' or valor == ''):
+
+        # Pede jogada novamente
+        print('Introduza a jogada')
         coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
         valor = input('- valor >> ')
 
     # Extrai numeros introduzidos para a coordenada
     argumentos = list(filter(lambda x: x.isdigit(), coordenada))
-    coordenada = cria_coordenada(int(argumentos[0]),int(argumentos[1]))
+    valor = int(valor)
+    lin = int(argumentos[0])
+    col = int(argumentos[1])
 
-    return cria_jogada(coordenada,int(valor))
+    # Se for valida para o tabuleiro criamos jogada
+    if ( 0 < lin < linha_max+1 and 
+         0 < col < coluna_max+1 and 
+         valor in (0,1,2) ):
+        return cria_jogada(cria_coordenada(lin,col),valor)
+    else:
+        False
 
 # Funcao tabuleiro celulas vazias
 def tabuleiro_celulas_vazias(t):
@@ -643,8 +662,8 @@ def jogo_picross(espec):
     especificacoes = le_tabuleiro(espec)
     tabuleiro = cria_tabuleiro(especificacoes)
 
-    # Enquanto o tabuleiro nao estiver completo
-    while not(tabuleiro_completo(tabuleiro)):
+    # Enquanto o tabuleiro estiver com celulas por preencher
+    while not(len(tabuleiro_celulas_vazias(tabuleiro)) == 0):
 
         # Mostra no ecra o tabuleiro
         escreve_tabuleiro(tabuleiro)
@@ -652,14 +671,22 @@ def jogo_picross(espec):
         # Pede jogada
         jogada = pede_jogada(tabuleiro)
 
-        # Atualiza tabuleiro
-        coordenada = jogada_coordenada(jogada)
-        valor = jogada_valor(jogada)
+        # Enquanto nao houver jogada valida nao atualiza tabuleiro
+        while jogada == False:
+            print('Jogada invalida.\nIntroduza a jogada')
+            jogada = pede_jogada(tabuleiro)
+        else:
+            coordenada = jogada_coordenada(jogada)
+            valor = jogada_valor(jogada)
 
-        tabuleiro = tabuleiro_preenche_celula(tabuleiro, coordenada, valor)
+            tabuleiro_preenche_celula(tabuleiro, coordenada, valor)
 
-    # Mostra tabuleiro resolvido
-    escreve_tabuleiro(tabuleiro)
-
-    print('JOGO: Parabens, encontrou a solucao!')
-    return True
+    # Testa se esta resolvido corretamente
+    if tabuleiro_completo(tabuleiro):
+        escreve_tabuleiro(tabuleiro)
+        print('JOGO: Parabens, encontrou a solucao!')
+        return True
+    else:
+        escreve_tabuleiro(tabuleiro)
+        print('JOGO: O tabuleiro nao esta correto!')
+        return False
