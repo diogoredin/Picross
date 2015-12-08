@@ -49,10 +49,6 @@ class coordenada:
     # Iniciador
     def __init__(self, lin, col):
 
-        # Testa se sao inteiros positivos
-        if not(isinstance(lin, (int)) and isinstance(col, (int)) and ((lin > 0) and (col > 0))):
-            raise ValueError('cria_coordenada: argumentos invalidos')
-
         # Acede a coluna e linha
         self.linha = lin
         self.coluna = col
@@ -70,6 +66,11 @@ def cria_coordenada(lin, col):
     '''cria_coordenada  : int x int -> coordenada
        cria_coordenada(lin, col) recebe dois argumentos positivos do tipo inteiro, linha e coluna respetivamente e 
        devolve um elemento do tipo coordenada correspondete a celula (l : c).'''
+
+    # Testa se sao inteiros positivos
+    if not(isinstance(lin, (int)) and isinstance(col, (int)) and ((lin > 0) and (col > 0))):
+        raise ValueError('cria_coordenada: argumentos invalidos')
+
     return coordenada(lin, col)
 
 # Seletor
@@ -143,10 +144,6 @@ class jogada:
     # Iniciador
     def __init__(self, coord, cel):
 
-        # Testa se recebe um elemento do tipo coordenada e um inteiro com valor 1 ou 2, correspondente a celula
-        if not(isinstance(coord, (coordenada)) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
-            raise ValueError('cria_jogada: argumentos invalidos')
-
         # Acede a coordenada e celula
         self.coordenada = coord
         self.celula = cel
@@ -164,6 +161,11 @@ def cria_jogada(coord, cel):
     '''cria_joagada : coordenada x {1,2} -> jogada
        cria_jogada(coorde, cel) recebe como argumento um elemento do tipo coordenada e um inteiro com valor 1 ou 2
        e verfica a validade dos seus argumentos.'''
+
+    # Testa se recebe um elemento do tipo coordenada e um inteiro com valor 1 ou 2, correspondente a celula
+    if not(e_coordenada(coord) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
+        raise ValueError('cria_jogada: argumentos invalidos')
+
     return jogada(coord, cel)
 
 # Seletor
@@ -594,25 +596,20 @@ def pede_jogada(t):
     coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
     valor = input('- valor >> ')
 
-    # Enquanto nao for introduzida a jogada
-    while (coordenada == '' or valor == ''):
+    # Se for introduzida jogada
+    if (coordenada != '' and valor != ''):
 
-        # Pede jogada novamente
-        print('Introduza a jogada')
-        coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
-        valor = input('- valor >> ')
+        # Extrai numeros introduzidos para a coordenada
+        argumentos = list(filter(lambda x: x.isdigit(), coordenada))
+        valor = int(valor)
+        lin = int(argumentos[0])
+        col = int(argumentos[1])
 
-    # Extrai numeros introduzidos para a coordenada
-    argumentos = list(filter(lambda x: x.isdigit(), coordenada))
-    valor = int(valor)
-    lin = int(argumentos[0])
-    col = int(argumentos[1])
-
-    # Se for valida para o tabuleiro criamos jogada
-    if ( 0 < lin < linha_max+1 and 0 < col < coluna_max+1 ):
-        return cria_jogada(cria_coordenada(lin,col),valor)
-    else:
-        return False
+        # Se for valida para o tabuleiro criamos jogada
+        if ( 0 < lin < linha_max+1 and 0 < col < coluna_max+1 ):
+            return cria_jogada(cria_coordenada(lin,col),valor)
+        else:
+            return False
 
 # Funcao tabuleiro celulas vazias
 def tabuleiro_celulas_vazias(t):
@@ -669,15 +666,17 @@ def jogo_picross(espec):
         # Pede jogada
         jogada = pede_jogada(tabuleiro)
 
-        # Enquanto nao houver jogada valida nao atualiza tabuleiro
-        while jogada == False:
-            print('Jogada invalida.')
-            jogada = pede_jogada(tabuleiro)
-        else:
-            coordenada = jogada_coordenada(jogada)
-            valor = jogada_valor(jogada)
+        # Enquanto nao houver jogada valida pede jogada
+        while e_jogada(jogada) == False:
+            if jogada == False:
+                print('Jogada invalida.')
+                jogada = pede_jogada(tabuleiro)
 
-            tabuleiro_preenche_celula(tabuleiro, coordenada, valor)
+        # Atualiza tabuleiro
+        coordenada = jogada_coordenada(jogada)
+        valor = jogada_valor(jogada)
+
+        tabuleiro_preenche_celula(tabuleiro, coordenada, valor)
 
     # Testa se esta resolvido corretamente
     if tabuleiro_completo(tabuleiro):
