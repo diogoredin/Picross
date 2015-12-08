@@ -1,10 +1,7 @@
 ################################################################
 #
 #   TABULEIRO
-#   - Representa uma jogada a efetuar sobre um tabuleiro
-#     Cada jogada e composto por uma coordenada e um valor
-#     igual a 1 ou dois que representa o conteudo de uma
-#     celula de um tabuleiro de picross.
+#   - Representa um tabuleiro de picross.
 #
 #   - Repr. Interna -> Criada a estrutura de dados 'tabuleiro'.
 #
@@ -14,7 +11,7 @@
 class tabuleiro:
 
     # Iniciador
-    def __init__(self, t, cel):
+    def __init__(self, t):
 
         # exemplo do t - ( ( (0,0),(0,0),(0,0) ), ( (0,0),(0,0),(0,0) ) )
         # corresponde a especificacoes do tabuleiro em cada tuplo
@@ -29,16 +26,6 @@ class tabuleiro:
 
         # se o argumento t e um tuplo
         if not( isinstance(t, (tuple))
-                # se as celulas sao lista
-                and isinstance(cel, (list))
-                # se as linhas sao lista
-                and all( isinstance(linhas, (list)) for linhas in cel )
-                # se as celulas sao 0, 1, 2
-                and all( celulas in (0,1,2) for linhas in cel for celulas in linhas )
-                # se o numero de listas construidos e o correto (uma lista por cada linha)
-                and len(cel) == len(t[0])
-                # se o numero de celulas construidos e o correto (uma celula por cada coluna)
-                and all( len(linhas) == len(t[1]) for linhas in cel )
                 # se o tuplo t contem dois tuplos
                 and len(t) == 2
                 # se os elementos do tuplo sao tuplos
@@ -57,7 +44,7 @@ class tabuleiro:
         # Criamos linhas, colunas e celulas conforme o tuplo recebido
         self.linhas = tuple(t[0])
         self.colunas = tuple(t[1])
-        self.celulas = cel
+        self.celulas = [[0 for linha in range(len(t[0]))] for coluna in range(len(t[1]))]
 
     # Atributo
     def get_linhas(self):
@@ -71,29 +58,17 @@ class tabuleiro:
     def get_celulas(self):
         return self.celulas
 
-    # Igualdade
-    def __eq__(self, tab):
-
-        # Testa se recebe dois elementos do tipo tabuleiro
-        if not(isinstance(self, (tabuleiro)) and isinstance(tab, (tabuleiro))):
-            raise ValueError('tabuleiros_iguais: argumentos invalidos')
-
-        # Igual quando as linhas, colunas e celulas sao iguais
-        return ( ( self.get_linhas() == tab.get_linhas() ) and
-                 ( self.get_linhas() == tab.get_linhas() ) and 
-                 ( self.get_celulas() == tab.get_celulas() ) )
+    # Modificador
+    def preenche_celula(self, linha, coluna, e):
+        self.celulas[linha-1][coluna-1] = e
+        return self
 
 # Construtor
 def cria_tabuleiro(t):
     '''cria_tabuleiro : tuplo -> tabuleiro
        cria_tabuleiro(t) recebe como argumento um elemento t do tipo tuplo descrevendo a especificacao das 
        linhas e das colunas do tabuleiro, e devolve um elemento do tipo tabuleiro.'''
-
-    # Cria lista para cada linha, e cria um elemento a 0 por cada coluna (tabuleiro vazio)
-    # exemplo de tabuleiro 3x3: [[0,0,0],[0,0,0],[0,0,0]]
-    cel = [[0 for linha in range(len(t[0]))] for coluna in range(len(t[1]))]
-
-    return tabuleiro(t, cel)
+    return tabuleiro(t)
 
 # Seletor
 def tabuleiro_especificacoes(t):
@@ -101,6 +76,10 @@ def tabuleiro_especificacoes(t):
        tabuleiro_especificacoes(t) recebe como argumento um elemento t do tipo tabuleiro e devolve um tuplo composto 
        por dois tuplos de tuplos de inteiros, cujo primeiro elemento corresponde a especificacao das linhas 
        e o segundo a especificacao das colunas.'''
+
+    # Testa se recebe argumentos corretos
+    if not( e_tabuleiro(t) ):
+        raise ValueError('tabuleiro_especificacoes: argumentos invalidos')
 
     # Acede linhas e colunas do tabuleiro
     spec_linhas = t.get_linhas()
@@ -118,7 +97,16 @@ def tabuleiro_celulas(t):
        tabuleiro_celulas(t) recebe como argumento um elemento t do tipo tabuleiro e devolve uma lista composta 
        por tantas listas quantas linhas o tabuleiro tiver. Cada lista contem o valor das celulas correspondentes a
        respetiva linha.'''
-    return t.get_celulas()
+    
+    # Testa se recebe argumentos corretos
+    if not( e_tabuleiro(t) ):
+        raise ValueError('tabuleiro_celulas: argumentos invalidos')
+
+    # Acede celulas do tabuleiro
+    celulas = t.get_celulas()
+
+    # Retorna lista com celulas
+    return [[elemento for elemento in linha] for linha in celulas]
 
 # Seletor
 def tabuleiro_dimensoes(t):
@@ -126,6 +114,10 @@ def tabuleiro_dimensoes(t):
        tabuleiro_dimensoes(t) recebe como argumento um elemento t do tipo tabuleiro e devolve um tuplo 
        com dois elementos, cujo primeiro elemento e o numero de linhas do tabuleiro e o segundo o numero 
        de colunas do mesmo.'''
+
+    # Testa se recebe argumentos corretos
+    if not( e_tabuleiro(t) ):
+        raise ValueError('tabuleiro_dimensoes: argumentos invalidos')
 
     # Vai buscar as especificacoes do tabuleiro
     # spec vai ser um tuplo com as especificacoes das linhas na
@@ -151,9 +143,19 @@ def tabuleiro_celula(t, c):
        tipo coordenada e devolve um elemento do tipo inteiro entre 0 e 2, que corresponde ao valor contido na 
        celula do tabuleiro referente a coordenada c. 0 - celula vazia / 1 - celula branca / 2 - celula preenchida.'''
 
-    # Acede a linha e coluna da coordenada dada
+    # Testa se recebe tabuleiro e coordenada
+    if not( e_tabuleiro(t) and e_coordenada(c) ):
+        raise ValueError('tabuleiro_celula: argumentos invalidos')
+
+    linha_max = tabuleiro_dimensoes(t)[0]
+    coluna_max = tabuleiro_dimensoes(t)[1]
+
     linha = coordenada_linha(c)
     coluna = coordenada_coluna(c)
+
+    # Testa se coordenada esta dentro do tabuleiro
+    if not( 0 < linha < linha_max+1 and 0 < coluna < coluna_max+1 ):
+        raise ValueError('tabuleiro_celula: argumentos invalidos')
 
     # Cria lista com celulas do tabuleiro
     celulas = tabuleiro_celulas(t)
@@ -171,18 +173,21 @@ def tabuleiro_preenche_celula(t, c, e):
        com o elemento e, que pode ser 0, 1 ou 2. 0 - celula vazia / 1 - celula branca / 2 - celula preenchida. Devolve
        o tabuleiro modificado na celula especificada.'''
 
-    # Acede a linha e coluna da coordenada dada
+    # Testa se recebe argumentos corretos
+    if not( e_tabuleiro(t) and e_coordenada(c) and e in (0,1,2) ):
+        raise ValueError('tabuleiro_preenche_celula: argumentos invalidos')
+
+    linha_max = tabuleiro_dimensoes(t)[0]
+    coluna_max = tabuleiro_dimensoes(t)[1]
+
     linha = coordenada_linha(c)
     coluna = coordenada_coluna(c)
 
-    # Cria lista com celulas do tabuleiro
-    celulas = tabuleiro_celulas(t)
+    # Testa se coordenada esta dentro do tabuleiro
+    if not( 0 < linha < linha_max+1 and 0 < coluna < coluna_max+1 ):
+        raise ValueError('tabuleiro_preenche_celula: argumentos invalidos')
 
-    # Guarda na posicao especificada o novo elemento
-    celulas[linha-1][coluna-1] = e
-
-    # Cria novo tabuleiro com as mesmas especificacoes e celula alterada
-    return tabuleiro(tabuleiro_especificacoes(t), celulas)
+    return t.preenche_celula(linha,coluna,e)
 
 # Reconhecedor
 def e_tabuleiro(t):
@@ -203,26 +208,27 @@ def tabuleiro_completo(t):
     # Cria lista com celulas do tabuleiro
     celulas = tabuleiro_celulas(t)
 
-    # Especificacoes linhas e colunas
-    linhas = tabuleiro_especificacoes(t)[0]
-    colunas = tabuleiro_especificacoes(t)[1]
-
-    qtd_linhas = tabuleiro_dimensoes(t)[0]
-    qtd_colunas = tabuleiro_dimensoes(t)[1]
-
     if not( # Testa se ha celulas vazias
             len(tabuleiro_celulas_vazias(t)) == 0
             ):
-        return False
-    else:
         return True
+    else:
+        return False
 
 # Teste
 def tabuleiros_iguais(t1, t2):
     '''tabuleiros_iguais : tabuleiro x tabuleiro -> logico
        tabuleiros_iguais(t1, t2) recebe como argumento dois elementos do tipo tabuleiro e devolve True caso esses elementos
        correspondam ao mesmo tabuleiro, e False caso contrario.'''
-    return (t1 == t2)
+
+    # Testa se recebe tabuleiro
+    if not( e_tabuleiro(t1) and e_tabuleiro(t2)):
+        raise ValueError('tabuleiros_iguais: argumentos invalidos')
+
+    # Igual quando as linhas, colunas e celulas sao iguais
+    return ( ( tabuleiro_especificacoes(t1)[0] == tabuleiro_especificacoes(t2)[0] ) and
+             ( tabuleiro_especificacoes(t1)[1] == tabuleiro_especificacoes(t2)[1] ) and 
+             ( tabuleiro_celulas(t1) == tabuleiro_celulas(t2) ) )
 
 # Funcao
 def escreve_tabuleiro(t):
@@ -308,3 +314,5 @@ def escreve_tabuleiro(t):
 
         # Proxima linha
         print(nova_linha + '|')
+
+    print('')
