@@ -16,10 +16,6 @@ class jogada:
     # Iniciador
     def __init__(self, coord, cel):
 
-        # Testa se recebe um elemento do tipo coordenada e um inteiro com valor 1 ou 2, correspondente a celula
-        if not(isinstance(coord, (coordenada)) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
-            raise ValueError('cria_jogada: argumentos invalidos')
-
         # Acede a coordenada e celula
         self.coordenada = coord
         self.celula = cel
@@ -32,21 +28,16 @@ class jogada:
     def get_celula(self):
         return self.celula
 
-    # Igualdade
-    def __eq__(self, jog):
-
-        # Testa se recebe dois elementos do tipo jogada
-        if not(isinstance(self, (jogada)) and isinstance(jog, (jogada))):
-            raise ValueError('jogadas_iguais: argumentos invalidos')
-
-        # Igual quando as coordenadas e valor de ambos sao iguais
-        return ( ( self.get_coordenada() == jog.get_coordenada() ) and ( self.get_celula() == jog.get_celula() ) )
-
 # Construtor
 def cria_jogada(coord, cel):
     '''cria_joagada : coordenada x {1,2} -> jogada
        cria_jogada(coorde, cel) recebe como argumento um elemento do tipo coordenada e um inteiro com valor 1 ou 2
        e verfica a validade dos seus argumentos.'''
+
+    # Testa se recebe um elemento do tipo coordenada e um inteiro com valor 1 ou 2, correspondente a celula
+    if not(e_coordenada(coord) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
+        raise ValueError('cria_jogada: argumentos invalidos')
+
     return jogada(coord, cel)
 
 # Seletor
@@ -84,7 +75,12 @@ def jogadas_iguais(jog1, jog2):
     '''jogadas_iguais : jogada x jogada -> logico
        jogadas_iguais(jog1, jog2) recebe como argumento dois elementos do tipo jogada e devolve True caso esses elementos
        correspondam a mesma jogada, e False caso contrario.'''
-    return (jog1 == jog2)
+
+    # Testa se recebe dois elementos do tipo jogada
+    if not(isinstance(jog1, (jogada)) and isinstance(jog2, (jogada))):
+        raise ValueError('jogadas_iguais: argumentos invalidos')
+
+    return ( ( jogada_coordenada(jog1) == jogada_coordenada(jog2) ) and ( jogada_valor(jog1) == jogada_valor(jog2) ) )
 
 # Funcao
 def jogada_para_cadeia(jog):
