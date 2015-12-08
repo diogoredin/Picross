@@ -1,4 +1,4 @@
-################################################################
+###############################################################
 #
 #   COORDENADA
 #   - Utilizado para indexar as celulas do tabuleiro. Cada
@@ -18,10 +18,6 @@ class coordenada:
     # Iniciador
     def __init__(self, lin, col):
 
-        # Testa se sao inteiros positivos
-        if not(isinstance(lin, (int)) and isinstance(col, (int)) and ((lin > 0) and (col > 0))):
-            raise ValueError('cria_coordenada: argumentos invalidos')
-
         # Acede a coluna e linha
         self.linha = lin
         self.coluna = col
@@ -34,21 +30,16 @@ class coordenada:
     def get_coluna(self):
         return self.coluna
 
-    # Igualdade
-    def __eq__(self, coord):
-
-        # Testa se recebe dois elementos do tipo coordenada
-        if not(isinstance(self, (coordenada)) and isinstance(coord, (coordenada))):
-            raise ValueError('coordenadas_iguais: argumentos invalidos')
-
-        # Igual quando as linhas e colunas são iguais
-        return ( ( self.get_linha() == coord.get_linha() ) and ( self.get_coluna() == coord.get_coluna() ) )
-
 # Construtor
 def cria_coordenada(lin, col): 
     '''cria_coordenada  : int x int -> coordenada
        cria_coordenada(lin, col) recebe dois argumentos positivos do tipo inteiro, linha e coluna respetivamente e 
        devolve um elemento do tipo coordenada correspondete a celula (l : c).'''
+
+    # Testa se sao inteiros positivos
+    if not(isinstance(lin, (int)) and isinstance(col, (int)) and ((lin > 0) and (col > 0))):
+        raise ValueError('cria_coordenada: argumentos invalidos')
+
     return coordenada(lin, col)
 
 # Seletor
@@ -84,7 +75,12 @@ def coordenadas_iguais(coord1, coord2):
     '''coordenadas_iguais : coordenada x coordenada -> logico
        coordenadas_iguais(coord1, coord2) recebe como argumento dois elementos do tipo coordenada e devolve True caso 
        esses elementos correspondam a mesma coordenada, e False caso contrario.'''
-    return (coord1 == coord2)
+
+    # Testa se recebe uma coordenada
+    if not( e_coordenada(coord1) and e_coordenada(coord2) ):
+        raise ValueError('coordenadas_iguais: argumentos invalidos')
+
+    return ( ( coordenada_linha(coord1) == coordenada_linha(coord2) ) and ( coordenada_coluna(coord1) == coordenada_coluna(coord2) ) )
 
 # Funcao
 def coordenada_para_cadeia(coord):
