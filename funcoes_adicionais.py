@@ -3,9 +3,9 @@
 #   FUNCOES ADICIONAIS
 #   - le_tabuleiro
 #   - pede_jogada
-#   - jogo_picross
 #   - tabuleiro_celulas_vazias
 #   - linha_completa
+#   - jogo_picross
 #
 ################################################################
 
@@ -38,23 +38,30 @@ def pede_jogada(t):
     if not(e_tabuleiro(t)):
         raise ValueError('pede_jogada: argumentos invalidos')
 
+    linha_max = tabuleiro_dimensoes(t)[0]
+    coluna_max = tabuleiro_dimensoes(t)[1]
     coordenada_min = coordenada_para_cadeia(cria_coordenada(1,1))
-    coordenada_max = coordenada_para_cadeia(cria_coordenada(tabuleiro_dimensoes(t)[0],tabuleiro_dimensoes(t)[1]))
+    coordenada_max = coordenada_para_cadeia(cria_coordenada(linha_max,coluna_max))
 
-    print('Introduza a jogada:')
+    # Pede jogada ao utilizador
+    print('Introduza a jogada')
     coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
     valor = input('- valor >> ')
 
-    while coordenada == '' or valor == '' or int(valor) not in (1,2):
-        print('Jogada invalida.\nIntroduza a jogada:')
-        coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
-        valor = input('- valor >> ')
+    # Se for introduzida jogada
+    if (coordenada != '' and valor != ''):
 
-    # Extrai numeros introduzidos para a coordenada
-    argumentos = list(filter(lambda x: x.isdigit(), coordenada))
-    coordenada = cria_coordenada(int(argumentos[0]),int(argumentos[1]))
+        # Extrai numeros introduzidos para a coordenada
+        argumentos = list(filter(lambda x: x.isdigit(), coordenada))
+        valor = int(valor)
+        lin = int(argumentos[0])
+        col = int(argumentos[1])
 
-    return cria_jogada(coordenada,int(valor))
+        # Se for valida para o tabuleiro criamos jogada
+        if ( 0 < lin < linha_max+1 and 0 < col < coluna_max+1 ):
+            return cria_jogada(cria_coordenada(lin,col),valor)
+        else:
+            return False
 
 # Funcao tabuleiro celulas vazias
 def tabuleiro_celulas_vazias(t):
@@ -102,8 +109,8 @@ def jogo_picross(espec):
     especificacoes = le_tabuleiro(espec)
     tabuleiro = cria_tabuleiro(especificacoes)
 
-    # Enquanto o tabuleiro nao estiver completo
-    while not(tabuleiro_completo(tabuleiro)):
+    # Enquanto o tabuleiro estiver com celulas por preencher
+    while not(len(tabuleiro_celulas_vazias(tabuleiro)) == 0):
 
         # Mostra no ecra o tabuleiro
         escreve_tabuleiro(tabuleiro)
@@ -111,14 +118,24 @@ def jogo_picross(espec):
         # Pede jogada
         jogada = pede_jogada(tabuleiro)
 
+        # Enquanto nao houver jogada valida pede jogada
+        while e_jogada(jogada) == False:
+            if jogada == False:
+                print('Jogada invalida.')
+                jogada = pede_jogada(tabuleiro)
+
         # Atualiza tabuleiro
         coordenada = jogada_coordenada(jogada)
         valor = jogada_valor(jogada)
 
-        tabuleiro = tabuleiro_preenche_celula(tabuleiro, coordenada, valor)
+        tabuleiro_preenche_celula(tabuleiro, coordenada, valor)
 
-    # Mostra tabuleiro resolvido
-    escreve_tabuleiro(tabuleiro)
-
-    print('JOGO: Parabens, encontrou a solucao!')
-    return True
+    # Testa se esta resolvido corretamente
+    if tabuleiro_completo(tabuleiro):
+        escreve_tabuleiro(tabuleiro)
+        print('JOGO: Parabens, encontrou a solucao!')
+        return True
+    else:
+        escreve_tabuleiro(tabuleiro)
+        print('JOGO: O tabuleiro nao esta correto!')
+        return False
