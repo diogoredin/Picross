@@ -1,66 +1,35 @@
-# Projeto FP - Picross
+   INDEX
 
-TO DO LIST
+   1. Coordenada
+     1.1. cria_coordenada
+     1.2. coordenada_linha
+     1.3. coordenada_coluna
+     1.4. e_coordenada
+     1.5. coordenadas_iguais
+     1.6. coordenada_para_cadeia
 
+   2. Jogada
+     2.1. cria_jogada
+     2.2. jogada_coordenada
+     2.3. jogada_valor
+     2.4. e_jogada
+     2.5. jogadas_iguais
+     2.6. jogada_para_cadeia
 
-  - Coordenada:
+   3. Tabuleiro
+     3.1. cria_tabuleiro
+     3.2. tabuleiro_dimensoes
+     3.3. tabuleriro_especificacoes
+     3.4. tabuleiro_celula
+     3.5. tabuleiro_preenche_celula
+     3.6. e_tabuleiro
+     3.7. tabuleiro_completo
+     3.8. tabuleiros_iguais
+     3.9. escreve_tabuleiro
 
-        # Métodos:
-
-              --> __init__                       X
-              --> get_linha                      X
-              --> get_coluna                     X
-              --> __eq__                         X
-
-        # Funcões:
-
-              --> cria_coordenadas               X
-              --> coordenada_linha               X
-              --> coordenada_coluna              X
-              --> e_coordenada                   X
-              --> coordenadas_iguais             X
-              --> coordenada_para_cadeia         X
-
-  - Tabuleiro:
-
-        # Métodos:
-
-              --> __init__                       X
-
-        # Funções:
-
-              --> cria_tabuleiro                 X
-              --> tabuleiro_dimensões            X
-              --> tabuleriro_especificacoes      X
-              --> tabuleiro_celula               X
-              --> tabuleiro_preenche_celula      
-              --> e_tabuleiro                    
-              --> tabuleiro_completo
-              --> tabuleiros_iguais
-              --> escreve_tabuleiro
-
-  - Jogada:
-
-        # Métodos:
-
-              --> __init__                       X
-              --> get_coordenada                 X
-              --> get_celula                     X
-              --> __eq__                         X
-
-        # Funções:
-
-              --> cria_jogada                    X
-              --> jogada_coordenada              X
-              --> jogada_valor                   X
-              --> e_jogada                       X
-              --> jogadas_iguais                 X
-              --> jogada_para_cadeia             X
-
-# FUNÇÕES ADICIONAIS:
-
-  --> le_tabuleiro
-  --> pede_jogada
-  --> jogo_picross
-  --> tabuleiro_celulas_vazias
-  --> linha_completa
+   4. Funcoes Adicionais
+     4.1. le_tabuleiro
+     4.2. pede_jogada
+     4.3. tabuleiro_celulas_vazias
+     4.4. linha_completa
+     4.5. jogo_picross
