@@ -29,7 +29,7 @@
 #
 #   3. Tabuleiro
 #     3.1. cria_tabuleiro
-#     3.2. tabuleiro_dimensões
+#     3.2. tabuleiro_dimensoes
 #     3.3. tabuleriro_especificacoes
 #     3.4. tabuleiro_celula
 #     3.5. tabuleiro_preenche_celula
@@ -82,8 +82,8 @@ class coordenada:
 # Construtor
 def cria_coordenada(lin, col): 
     '''cria_coordenada  : int x int -> coordenada
-       cria_coordenada(lin, col) recebe dois argumentos positivos do tipo inteiro, linha e coluna respetivamente e 
-       devolve um elemento do tipo coordenada correspondete a celula (l : c).'''
+       cria_coordenada(lin, col) recebe dois argumentos positivos do tipo inteiro, linha e coluna 
+       respetivamente e devolve um elemento do tipo coordenada correspondete a celula (l : c).'''
 
     # Testa se sao inteiros positivos
     if not(isinstance(lin, (int)) and isinstance(col, (int)) and ((lin > 0) and (col > 0))):
@@ -94,7 +94,8 @@ def cria_coordenada(lin, col):
 # Seletor
 def coordenada_linha(coord):
     '''coordenada_linha : coordenada -> inteiro
-       coordenada_linha(coord) recebe como argumento um elemento do tipo coordenada e devolve a linha respetiva.'''
+       coordenada_linha(coord) recebe como argumento um elemento do tipo coordenada e devolve a 
+       linha respetiva.'''
     
     # Testa se recebe uma coordenada
     if not( e_coordenada(coord) ):
@@ -105,7 +106,8 @@ def coordenada_linha(coord):
 # Seletor
 def coordenada_coluna(coord):
     '''coordenada_coluna : coordenada -> inteiro
-       coordenada_coluna(coord) recebe como argumento um elemento do tipo coordenada e devolve a coluna respetiva.'''
+       coordenada_coluna(coord) recebe como argumento um elemento do tipo coordenada e devolve a 
+       coluna respetiva.'''
     
     # Testa se recebe uma coordenada
     if not( e_coordenada(coord) ):
@@ -116,26 +118,28 @@ def coordenada_coluna(coord):
 # Reconhecedor
 def e_coordenada(elem):
     '''e_coordenada : universal -> logico
-       e_coordenada(elem) recebe um unico argumento e devolve True caso seja do tipo coordenada e False caso contrario.'''
+       e_coordenada(elem) recebe um unico argumento e devolve True caso seja do tipo coordenada e 
+       False caso contrario.'''
     return isinstance(elem, (coordenada))
 
 # Teste
 def coordenadas_iguais(coord1, coord2):
     '''coordenadas_iguais : coordenada x coordenada -> logico
-       coordenadas_iguais(coord1, coord2) recebe como argumento dois elementos do tipo coordenada e devolve True caso 
-       esses elementos correspondam a mesma coordenada, e False caso contrario.'''
+       coordenadas_iguais(coord1, coord2) recebe como argumento dois elementos do tipo coordenada e 
+       devolve True caso esses elementos correspondam a mesma coordenada, e False caso contrario.'''
 
     # Testa se recebe uma coordenada
     if not( e_coordenada(coord1) and e_coordenada(coord2) ):
         raise ValueError('coordenadas_iguais: argumentos invalidos')
 
-    return ( ( coordenada_linha(coord1) == coordenada_linha(coord2) ) and ( coordenada_coluna(coord1) == coordenada_coluna(coord2) ) )
+    return ( ( coordenada_linha(coord1) == coordenada_linha(coord2) ) and 
+             ( coordenada_coluna(coord1) == coordenada_coluna(coord2) ) )
 
 # Funcao
 def coordenada_para_cadeia(coord):
     '''coordenada_para_cadeia : coordenada -> cad. caracteres
-       coordenada_para_cadeia(coord) recebe como argumento um elemento do tipo coordenada e devolve uma cadeia de 
-       caracteres que a representa.'''
+       coordenada_para_cadeia(coord) recebe como argumento um elemento do tipo coordenada e devolve 
+       uma cadeia de caracteres que a representa.'''
 
     # Testa se recebe coordenada
     if not( e_coordenada(coord) ):
@@ -177,10 +181,10 @@ class jogada:
 # Construtor
 def cria_jogada(coord, cel):
     '''cria_joagada : coordenada x {1,2} -> jogada
-       cria_jogada(coorde, cel) recebe como argumento um elemento do tipo coordenada e um inteiro com valor 1 ou 2
-       e verfica a validade dos seus argumentos.'''
+       cria_jogada(coorde, cel) recebe como argumento um elemento do tipo coordenada e um inteiro 
+       com valor 1 ou 2 e verfica a validade dos seus argumentos.'''
 
-    # Testa se recebe um elemento do tipo coordenada e um inteiro com valor 1 ou 2, correspondente a celula
+    # Testa se recebe um elemento do tipo coordenada e um inteiro com valor 1 ou 2
     if not(e_coordenada(coord) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
         raise ValueError('cria_jogada: argumentos invalidos')
 
@@ -189,9 +193,10 @@ def cria_jogada(coord, cel):
 # Seletor
 def jogada_coordenada(jog):
     '''jogada_coordenada : jogada -> coordenada
-       jogada_coordenada(jog) recebe como argumento um elemento do tipo jogada e devolve a coordenada respetiva.'''
+       jogada_coordenada(jog) recebe como argumento um elemento do tipo jogada e devolve a coordenada 
+       respetiva.'''
 
-    # Testa se recebe uma joagda
+    # Testa se recebe uma jogada
     if not( e_jogada(jog) ):
         raise ValueError('jogada_coordenada: argumentos invalidos')
 
@@ -201,7 +206,8 @@ def jogada_coordenada(jog):
 # Seletor
 def jogada_valor(jog):
     '''jogada_valor : jogada -> {1,2}
-       jogada_valor(jog) recebe como argumento um elemento do tipo jogada e devolve o valor respetivo.'''
+       jogada_valor(jog) recebe como argumento um elemento do tipo jogada e devolve o valor 
+       respetivo.'''
 
     # Testa se recebe uma jogada
     if not( e_jogada(jog) ):
@@ -213,34 +219,37 @@ def jogada_valor(jog):
 # Reconhecedor
 def e_jogada(elem):
     '''e_jogada : universal -> logico
-       e_jogada(elem) recebe um unico argumento e devolve True caso seja do tipo jogada e False caso contrario.'''
+       e_jogada(elem) recebe um unico argumento e devolve True caso seja do tipo jogada e False 
+       caso contrario.'''
     return isinstance(elem, (jogada))
 
 # Teste
 def jogadas_iguais(jog1, jog2):
     '''jogadas_iguais : jogada x jogada -> logico
-       jogadas_iguais(jog1, jog2) recebe como argumento dois elementos do tipo jogada e devolve True caso esses elementos
-       correspondam a mesma jogada, e False caso contrario.'''
+       jogadas_iguais(jog1, jog2) recebe como argumento dois elementos do tipo jogada e devolve 
+       True caso esses elementos correspondam a mesma jogada, e False caso contrario.'''
 
     # Testa se recebe dois elementos do tipo jogada
     if not(isinstance(jog1, (jogada)) and isinstance(jog2, (jogada))):
         raise ValueError('jogadas_iguais: argumentos invalidos')
 
-    return ( ( jogada_coordenada(jog1) == jogada_coordenada(jog2) ) and ( jogada_valor(jog1) == jogada_valor(jog2) ) )
+    return (( jogada_coordenada(jog1) == jogada_coordenada(jog2) ) and 
+           ( jogada_valor(jog1) == jogada_valor(jog2) ) )
 
 # Funcao
 def jogada_para_cadeia(jog):
     '''jogada_para_cadeia : jogada -> cad. caracteres
-       jogada_para_cadeia(jog) recebe como argumento um elemento do tipo jogada e devolve uma cadeia de caracteres que
-       a representa.'''
+       jogada_para_cadeia(jog) recebe como argumento um elemento do tipo jogada e devolve uma 
+       cadeia de caracteres que a representa.'''
 
     # Testa se recebe duas jogadas
     if not( e_jogada(jog) ):
         raise ValueError('jogada_para_cadeia: argumentos invalidos')
 
-    # Primeiro acedemos a coordenada da jogada e transformamos numa cadeia de caracteres e depois acedemos a 
-    # celula da jogada
-    return ( str( coordenada_para_cadeia( jogada_coordenada(jog) ) ) + ' --> ' + str( jogada_valor(jog) ) )
+    # Primeiro acedemos a coordenada da jogada e transformamos numa cadeia de caracteres e depois 
+    # acedemos a celula da jogada
+    return( str( coordenada_para_cadeia( jogada_coordenada(jog) ) ) + ' --> ' + 
+            str( jogada_valor(jog) ) )
 
 ################################################################
 #
@@ -276,7 +285,7 @@ class tabuleiro:
                 and all( isinstance(tuplos, (tuple)) for tuplos in t )
                 # se esses tuplos nao sao vazios
                 and all( len(tuplos) > 0 for tuplos in t )
-                # se as especificacoes sao inteiras
+                # se as especificacoes sao tuplos
                 and all( isinstance(espec, (tuple)) for tuplos in t for espec in tuplos )
                 # se as especificacoes sao inteiras
                 and all( isinstance(elem, (int)) for tuplos in t for espec in tuplos for elem in espec )
@@ -310,16 +319,17 @@ class tabuleiro:
 # Construtor
 def cria_tabuleiro(t):
     '''cria_tabuleiro : tuplo -> tabuleiro
-       cria_tabuleiro(t) recebe como argumento um elemento t do tipo tuplo descrevendo a especificacao das 
-       linhas e das colunas do tabuleiro, e devolve um elemento do tipo tabuleiro.'''
+       cria_tabuleiro(t) recebe como argumento um elemento t do tipo tuplo descrevendo a 
+       especificacao das linhas e das colunas do tabuleiro, e devolve um elemento do tipo 
+       tabuleiro.'''
     return tabuleiro(t)
 
 # Seletor
 def tabuleiro_especificacoes(t):
     '''tabuleiro_especificacoes : tabuleiro -> tuplo
-       tabuleiro_especificacoes(t) recebe como argumento um elemento t do tipo tabuleiro e devolve um tuplo composto 
-       por dois tuplos de tuplos de inteiros, cujo primeiro elemento corresponde a especificacao das linhas 
-       e o segundo a especificacao das colunas.'''
+       tabuleiro_especificacoes(t) recebe como argumento um elemento t do tipo tabuleiro e 
+       devolve um tuplo composto por dois tuplos de tuplos de inteiros, cujo primeiro elemento 
+       corresponde a especificacao das linhas e o segundo a especificacao das colunas.'''
 
     # Testa se recebe argumentos corretos
     if not( e_tabuleiro(t) ):
@@ -338,9 +348,9 @@ def tabuleiro_especificacoes(t):
 # Seletor
 def tabuleiro_celulas(t):
     '''tabuleiro_celulas : tabuleiro -> lista
-       tabuleiro_celulas(t) recebe como argumento um elemento t do tipo tabuleiro e devolve uma lista composta 
-       por tantas listas quantas linhas o tabuleiro tiver. Cada lista contem o valor das celulas correspondentes a
-       respetiva linha.'''
+       tabuleiro_celulas(t) recebe como argumento um elemento t do tipo tabuleiro e devolve uma 
+       lista composta por tantas listas quantas linhas o tabuleiro tiver. Cada lista contem o 
+       valor das celulas correspondentes a respetiva linha.'''
     
     # Testa se recebe argumentos corretos
     if not( e_tabuleiro(t) ):
@@ -355,9 +365,9 @@ def tabuleiro_celulas(t):
 # Seletor
 def tabuleiro_dimensoes(t):
     '''tabuleiro_dimensoes : tabuleiro -> tuplo
-       tabuleiro_dimensoes(t) recebe como argumento um elemento t do tipo tabuleiro e devolve um tuplo 
-       com dois elementos, cujo primeiro elemento e o numero de linhas do tabuleiro e o segundo o numero 
-       de colunas do mesmo.'''
+       tabuleiro_dimensoes(t) recebe como argumento um elemento t do tipo tabuleiro e devolve 
+       um tuplo com dois elementos, cujo primeiro elemento e o numero de linhas do tabuleiro e 
+       o segundo o numero de colunas do mesmo.'''
 
     # Testa se recebe argumentos corretos
     if not( e_tabuleiro(t) ):
@@ -384,8 +394,9 @@ def tabuleiro_dimensoes(t):
 def tabuleiro_celula(t, c):
     '''tabuleiro_celula : tabuleiro x coordenada -> {0, 1, 2}
        tabuleiro_celula(t) recebe como argumentos um elemento t do tipo tabuleiro e um elemento c do 
-       tipo coordenada e devolve um elemento do tipo inteiro entre 0 e 2, que corresponde ao valor contido na 
-       celula do tabuleiro referente a coordenada c. 0 - celula vazia / 1 - celula branca / 2 - celula preenchida.'''
+       tipo coordenada e devolve um elemento do tipo inteiro entre 0 e 2, que corresponde ao valor 
+       contido na celula do tabuleiro referente a coordenada c. 0 - celula vazia / 1 - celula 
+       branca / 2 - celula preenchida.'''
 
     # Testa se recebe tabuleiro e coordenada
     if not( e_tabuleiro(t) and e_coordenada(c) ):
@@ -412,10 +423,11 @@ def tabuleiro_celula(t, c):
 # Modificador
 def tabuleiro_preenche_celula(t, c, e):
     '''tabuleiro_preenche_celula :  tabuleiro × coordenada × {0, 1, 2} -> tabuleiro
-       tabuleiro_preenche_celula(t, c, e) recebe como argumentos um elemento t do tipo tabuleiro, um elemento c do tipo 
-       coordenada e um inteiro e entre 0 e 2, e modifica o tabuleiro t, preenchendo a celula referente a coordenada c 
-       com o elemento e, que pode ser 0, 1 ou 2. 0 - celula vazia / 1 - celula branca / 2 - celula preenchida. Devolve
-       o tabuleiro modificado na celula especificada.'''
+       tabuleiro_preenche_celula(t, c, e) recebe como argumentos um elemento t do tipo tabuleiro, um 
+       elemento c do tipo coordenada e um inteiro e entre 0 e 2, e modifica o tabuleiro t, preenchendo 
+       a celula referente a coordenada c com o elemento e, que pode ser 0, 1 ou 2. 0 - celula vazia / 
+       1 - celula branca / 2 - celula preenchida. Devolve o tabuleiro modificado na celula 
+       especificada.'''
 
     # Testa se recebe argumentos corretos
     if not( e_tabuleiro(t) and e_coordenada(c) and e in (0,1,2) ):
@@ -436,14 +448,15 @@ def tabuleiro_preenche_celula(t, c, e):
 # Reconhecedor
 def e_tabuleiro(t):
     '''e_tabuleiro : universal -> logico
-       e_tabuleiro(t) recebe um argumento e devolve True caso seja do tipo tabuleiro e False caso contrario.'''
+       e_tabuleiro(t) recebe um argumento e devolve True caso seja do tipo tabuleiro e False caso 
+       contrario.'''
     return isinstance(t, tabuleiro)
 
 # Reconhecedor
 def tabuleiro_completo(t):
     '''tabuleiro_completo : tabuleiro -> logico
-       tabuleiro_completo(t) recebe como argumento um tabuleiro e devolve True caso esteja totalmente preenchido de 
-       acordo com as suas especificacoes e False caso contrario.'''
+       tabuleiro_completo(t) recebe como argumento um tabuleiro e devolve True caso esteja totalmente 
+       preenchido de acordo com as suas especificacoes e False caso contrario.'''
 
     # Testa se recebe tabuleiro
     if not( e_tabuleiro(t) ):
@@ -464,10 +477,14 @@ def tabuleiro_completo(t):
             # Coloca valor da celula na lista no indice igual ao indice em que o valor foi encontrado
             colunas[celula][linha] = celulas[linha][celula]
 
-    if ( # Testa se as linhas estao corretas
-         all(linha_completa(tabuleiro_especificacoes(t)[0][linha],celulas[linha]) for linha in range(0, len(celulas))) and
+    if ( # Se o tabuleiro nao tem nenhuma celula vazia
+         len(tabuleiro_celulas_vazias(t)) == 0 and
+         # Testa se as linhas estao corretas
+         all(linha_completa(tabuleiro_especificacoes(t)[0][linha],celulas[linha]) 
+            for linha in range(0, len(celulas))) and
          # Testa se as colunas estao corretas
-         all(linha_completa(tabuleiro_especificacoes(t)[1][coluna],colunas[coluna]) for coluna in range(0, len(colunas)))
+         all(linha_completa(tabuleiro_especificacoes(t)[1][coluna],colunas[coluna]) 
+            for coluna in range(0, len(colunas)))
         ):
         return True
     else:
@@ -476,8 +493,8 @@ def tabuleiro_completo(t):
 # Teste
 def tabuleiros_iguais(t1, t2):
     '''tabuleiros_iguais : tabuleiro x tabuleiro -> logico
-       tabuleiros_iguais(t1, t2) recebe como argumento dois elementos do tipo tabuleiro e devolve True caso esses elementos
-       correspondam ao mesmo tabuleiro, e False caso contrario.'''
+       tabuleiros_iguais(t1, t2) recebe como argumento dois elementos do tipo tabuleiro e devolve 
+       True caso esses elementos correspondam ao mesmo tabuleiro, e False caso contrario.'''
 
     # Testa se recebe tabuleiro
     if not( e_tabuleiro(t1) and e_tabuleiro(t2)):
@@ -491,8 +508,8 @@ def tabuleiros_iguais(t1, t2):
 # Funcao
 def escreve_tabuleiro(t):
     '''escreve_tabuleiro : tabuleiro -> {}
-       escreve_tabuleiro(t) recebe como argumento um elemento t do tipo tabuleiro e escreve para o ecra a representacao 
-       externa de um tabuleiro de Picross.'''
+       escreve_tabuleiro(t) recebe como argumento um elemento t do tipo tabuleiro e escreve para o 
+       ecra a representacao externa de um tabuleiro de Picross.'''
 
     # Testa se recebe tabuleiro
     if not( e_tabuleiro(t) ):
@@ -526,9 +543,12 @@ def escreve_tabuleiro(t):
             # Existe se o indice da lista for menor que o numero de elementos na especificacao
             # Se for maior nao existe especificacao a escrever
             if linha_de_especificacoes < len(colunas[especificacao]):
-                especificacoes_das_colunas[linha_de_especificacoes] = especificacoes_das_colunas[linha_de_especificacoes] + str(nova_especificacao[linha_de_especificacoes]) + '    '
+                especificacoes_das_colunas[linha_de_especificacoes] = (
+                    especificacoes_das_colunas[linha_de_especificacoes] + 
+                    str(nova_especificacao[linha_de_especificacoes]) + '    ' )
             else:
-                especificacoes_das_colunas[linha_de_especificacoes] = especificacoes_das_colunas[linha_de_especificacoes] + '     '
+                especificacoes_das_colunas[linha_de_especificacoes] = (
+                    especificacoes_das_colunas[linha_de_especificacoes] + '     ' )
 
     # Mostra para o ecra a(s) linha(s) criada(s) por ordem inversa
     for linha_de_especificacoes in reversed(range(0, len(especificacoes_das_colunas))):
@@ -558,7 +578,8 @@ def escreve_tabuleiro(t):
             nova_linha = nova_linha + '[ ' + conteudo + ' ]'
 
         # ESPECIFICACOES DAS LINHAS
-        # Existem tantas especificacoes por linha quanto colunas. Percorremos todas, por ordem crescente.
+        # Existem tantas especificacoes por linha quanto colunas. Percorremos todas, por 
+        # ordem crescente.
         for especificacao in range(0, len(linhas[linha-1])):
 
             # Se houver especificacoes nessa posicao
@@ -593,8 +614,9 @@ def le_tabuleiro(espec):
        ficheiro com os dados de especificacao do jogo, e devolve um tuplo de dois tuplos com a 
        especificacao das linhas e colunas.'''
 
-    # Importa modulo ast que permite avaliar a string contida no ficheiro sem riscos. Apenas sao avaliadas funcoes python do tipo
-    # tuplo, lista, dicionario, booleano, string, numero e None. https://docs.python.org/2/library/ast.html#ast.literal_eval
+    # Importa modulo ast que permite avaliar a string contida no ficheiro sem riscos. Apenas sao
+    # avaliadas funcoes python do tipo tuplo, lista, dicionario, booleano, string, numero e None. 
+    # https://docs.python.org/2/library/ast.html#ast.literal_eval
     from ast import literal_eval
     
     # Abre ficheiro, le e fecha
@@ -629,10 +651,11 @@ def pede_jogada(t):
     if (coordenada != '' and valor != ''):
 
         # Extrai numeros introduzidos para a coordenada
-        argumentos = list(filter(lambda x: x.isdigit(), coordenada))
+        arg1 = list(filter(lambda x: x.isdigit(), coordenada.rsplit(' : ', 1)[0]))
+        arg2 = list(filter(lambda x: x.isdigit(), coordenada.rsplit(' : ', 1)[1]))
         valor = int(valor)
-        lin = int(argumentos[0])
-        col = int(argumentos[1])
+        lin = int(''.join(n for n in arg1 if n.isdigit()))
+        col = int(''.join(n for n in arg2 if n.isdigit()))
 
         # Se for valida para o tabuleiro criamos jogada
         if ( 0 < lin < linha_max+1 and 0 < col < coluna_max+1 ):
@@ -650,18 +673,21 @@ def tabuleiro_celulas_vazias(t):
     if not(e_tabuleiro(t)):
         raise ValueError('tabuleiro_celulas_vazias: argumentos invalidos')
 
+    # Dimensoes
     qtd_linhas = tabuleiro_dimensoes(t)[0]
     qtd_colunas = tabuleiro_dimensoes(t)[1]
 
+    # Lista celulas vazias
     lista = []
 
     # Percorre todas as celulas
-    for l, c in zip(range(1,qtd_linhas+1), range(1,qtd_colunas+1)):
+    for linha in range(1,qtd_linhas+1):
+        for coluna in range(1,qtd_colunas+1):
 
-        # Testa celula
-        coordenada = cria_coordenada(l, c)
-        if tabuleiro_celula(t, coordenada) == 0:
-            lista.append(coordenada)
+            # Testa celula
+            coordenada = cria_coordenada(linha,coluna)
+            if tabuleiro_celula(t, coordenada) == 0:
+                lista.append(coordenada)
 
     return lista
 
@@ -695,8 +721,14 @@ def linha_completa(especificacoes,celulas):
     if somador != 0:
         lista_ocorrencias.append(somador)
 
-    # Se os blocos de celulas preenchidas sao iguais as especificacoes, a linha / coluna esta correta
-    return (especificacoes == tuple(lista_ocorrencias))
+    # Se ha celulas vazias a linhas nao esta completa
+    if not(any(celulas[celula] == 0 for celula in range(0, len(celulas)))):
+
+        # Se os blocos de celulas preenchidas sao iguais as especificacoes, a linha / coluna esta correta
+        return (especificacoes == tuple(lista_ocorrencias))
+
+    else:
+        return False
 
 # Funcao jogo picross
 def jogo_picross(espec):
@@ -713,7 +745,7 @@ def jogo_picross(espec):
     tabuleiro = cria_tabuleiro(especificacoes)
 
     # Enquanto o tabuleiro estiver com celulas por preencher
-    while not(len(tabuleiro_celulas_vazias(tabuleiro)) == 0):
+    while len(tabuleiro_celulas_vazias(tabuleiro)) != 0:
 
         # Mostra no ecra o tabuleiro
         escreve_tabuleiro(tabuleiro)
@@ -734,11 +766,11 @@ def jogo_picross(espec):
         tabuleiro_preenche_celula(tabuleiro, coordenada, valor)
 
     # Testa se esta resolvido corretamente
-    if tabuleiro_completo(tabuleiro):
+    if tabuleiro_completo(tabuleiro) == True and len(tabuleiro_celulas_vazias(tabuleiro)) == 0:
         escreve_tabuleiro(tabuleiro)
         print('JOGO: Parabens, encontrou a solucao!')
         return True
-    else:
+    elif tabuleiro_completo(tabuleiro) == False and len(tabuleiro_celulas_vazias(tabuleiro)) == 0:
         escreve_tabuleiro(tabuleiro)
         print('JOGO: O tabuleiro nao esta correto!')
         return False
