@@ -452,9 +452,23 @@ def tabuleiro_completo(t):
     # Cria lista com celulas do tabuleiro
     celulas = tabuleiro_celulas(t)
 
-    if not( # Testa se ha celulas vazias
-            len(tabuleiro_celulas_vazias(t)) == 0
-            ):
+    # Cria lista com o conteudo das celulas de cada coluna
+    colunas = [[0 for elemento in linha] for linha in celulas]
+
+    # Percorre todas as linhas
+    for linha in range(0, len(celulas)):
+
+        # Percorre as celulas dessa linha
+        for celula in range(0, len(celulas[linha])):
+
+            # Coloca valor da celula na lista no indice igual ao indice em que o valor foi encontrado
+            colunas[celula][linha] = celulas[linha][celula]
+
+    if ( # Testa se as linhas estao corretas
+         all(linha_completa(tabuleiro_especificacoes(t)[0][linha],celulas[linha]) for linha in range(0, len(celulas))) and
+         # Testa se as colunas estao corretas
+         all(linha_completa(tabuleiro_especificacoes(t)[1][coluna],colunas[coluna]) for coluna in range(0, len(colunas)))
+        ):
         return True
     else:
         return False
@@ -657,6 +671,32 @@ def linha_completa(especificacoes,celulas):
        linha_completa(t) recebe como argumento um tuplo com a especificacao de uma linha ou coluna, e 
        uma lista com os conteudos das celulas de uma linha / coluna, e verifica se a linha / coluna em 
        questao satisfaz a especificacao recebida.'''
+
+    # Lista com o numero de blocos seguidos de celulas preenchidas ("especificacoes")
+    lista_ocorrencias = []
+
+    somador = 0
+
+    # Por cada celula dada
+    for celula in range(0, len(celulas)):
+
+        # Se a celula esta preenchida registamos a ocorrencia num somador
+        if celulas[celula] == 2:
+            somador += 1
+
+        # Se a celula nao esta preenchida fazemos reset ao somador e registamos o valor que tinha
+        # (que corresponde ao numero de celulas preenchidas seguidas que encontramos)
+        else:
+            if somador != 0:
+                lista_ocorrencias.append(somador)
+                somador = 0
+        
+    # Caso fossem todas preenchidas temos de passar o somador na mesma
+    if somador != 0:
+        lista_ocorrencias.append(somador)
+
+    # Se os blocos de celulas preenchidas sao iguais as especificacoes, a linha / coluna esta correta
+    return (especificacoes == tuple(lista_ocorrencias))
 
 # Funcao jogo picross
 def jogo_picross(espec):
