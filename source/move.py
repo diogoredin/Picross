@@ -10,6 +10,8 @@
 #
 ################################################################
 
+from coordinate import *
+
 # Cria tipo jogada
 class jogada:
 
@@ -35,7 +37,7 @@ def cria_jogada(coord, cel):
        com valor 1 ou 2 e verfica a validade dos seus argumentos.'''
 
     # Testa se recebe um elemento do tipo coordenada e um inteiro com valor 1 ou 2
-    if not(e_coordenada(coord) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
+    if not(is_coordinate(coord) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
         raise ValueError('cria_jogada: argumentos invalidos')
 
     return jogada(coord, cel)
@@ -98,5 +100,5 @@ def jogada_para_cadeia(jog):
 
     # Primeiro acedemos a coordenada da jogada e transformamos numa cadeia de caracteres e depois 
     # acedemos a celula da jogada
-    return( str( coordenada_para_cadeia( jogada_coordenada(jog) ) ) + ' --> ' + 
+    return( str( coordinate_to_string( jogada_coordenada(jog) ) ) + ' --> ' + 
             str( jogada_valor(jog) ) )

@@ -7,6 +7,8 @@
 #
 ################################################################
 
+from coordinate import *
+
 # Cria tipo tabuleiro
 class tabuleiro:
 
@@ -146,14 +148,14 @@ def tabuleiro_celula(t, c):
        branca / 2 - celula preenchida.'''
 
     # Testa se recebe tabuleiro e coordenada
-    if not( e_tabuleiro(t) and e_coordenada(c) ):
+    if not( e_tabuleiro(t) and is_coordinate(c) ):
         raise ValueError('tabuleiro_celula: argumentos invalidos')
 
     linha_max = tabuleiro_dimensoes(t)[0]
     coluna_max = tabuleiro_dimensoes(t)[1]
 
-    linha = coordenada_linha(c)
-    coluna = coordenada_coluna(c)
+    linha = coordinate_line(c)
+    coluna = coordinate_column(c)
 
     # Testa se coordenada esta dentro do tabuleiro
     if not( 0 < linha < linha_max+1 and 0 < coluna < coluna_max+1 ):
@@ -177,14 +179,14 @@ def tabuleiro_preenche_celula(t, c, e):
        especificada.'''
 
     # Testa se recebe argumentos corretos
-    if not( e_tabuleiro(t) and e_coordenada(c) and e in (0,1,2) ):
+    if not( e_tabuleiro(t) and is_coordinate(c) and e in (0,1,2) ):
         raise ValueError('tabuleiro_preenche_celula: argumentos invalidos')
 
     linha_max = tabuleiro_dimensoes(t)[0]
     coluna_max = tabuleiro_dimensoes(t)[1]
 
-    linha = coordenada_linha(c)
-    coluna = coordenada_coluna(c)
+    linha = coordinate_line(c)
+    coluna = coordinate_column(c)
 
     # Testa se coordenada esta dentro do tabuleiro
     if not( 0 < linha < linha_max+1 and 0 < coluna < coluna_max+1 ):
@@ -310,15 +312,15 @@ def escreve_tabuleiro(t):
         for coluna in range(1, qtd_colunas+1):
  
             # Vazio
-            if tabuleiro_celula(t, cria_coordenada(linha, coluna)) == 0:
+            if tabuleiro_celula(t, create_coordinate(linha, coluna)) == 0:
                 conteudo = '?'
 
             # Branco
-            elif tabuleiro_celula(t, cria_coordenada(linha, coluna)) == 1:
+            elif tabuleiro_celula(t, create_coordinate(linha, coluna)) == 1:
                 conteudo = '.'
 
             # Preenchido
-            elif tabuleiro_celula(t, cria_coordenada(linha, coluna)) == 2:
+            elif tabuleiro_celula(t, create_coordinate(linha, coluna)) == 2:
                 conteudo = 'x'
 
             # Escreve celula
