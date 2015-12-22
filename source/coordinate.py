@@ -1,6 +1,6 @@
 ################################################################
 #
-#   COORDENADA
+#   COORDINATE
 
 #   - Used to index the board cells. Each cell is indexed 
 #     by the line (an integer between 1 and the number of 
@@ -87,14 +87,14 @@ def same_coordinates(coord1, coord2):
              ( coordinate_column(coord1) == coordinate_column(coord2) ) )
 
 # Funcao
-def coordenada_para_cadeia(coord):
-    '''coordenada_para_cadeia : coordenada -> cad. caracteres
-       coordenada_para_cadeia(coord) recebe como argumento um elemento do tipo coordenada e devolve 
-       uma cadeia de caracteres que a representa.'''
+def coordinate_to_string(coord):
+    '''coordinate_to_string : coordinate -> string
+       coordinate_to_string(coord) recieves as argument a coordinate and return
+       the string that represents it.'''
 
-    # Testa se recebe coordenada
-    if not( e_coordenada(coord) ):
-        raise ValueError('coordenada_para_cadeia: argumentos invalidos')
+    # Test if the argument is a coordinate
+    if not( is_coordinate(coord) ):
+        raise ValueError('coordinate_to_string: invalid argument')
 
-    # Acedemos a linha e coluna
-    return ( '(' + str( coordenada_linha(coord) ) + ' : ' + str( coordenada_coluna(coord) ) + ')' )
+    # Access to the line and column
+    return ( '(' + str( coordinate_line(coord) ) + ' : ' + str( coordinate_column(coord) ) + ')' )

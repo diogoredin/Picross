@@ -17,7 +17,7 @@
 #     1.3. coordinate_column
 #     1.4. is_coordinate
 #     1.5. same_coordinates
-#     1.6. coordinates_to_string
+#     1.6. coordinate_to_string
 #
 #   2. Move
 #     2.1. create_move
@@ -47,106 +47,6 @@
 #
 ################################################################
 
-################################################################
-#
-#   COORDENADA
-
-#   - Used to index the board cells. Each cell is indexed 
-#     by the line (an integer between 1 and the number of 
-#     lines in the board) and the column (an integer between 
-#     1 and the number of colums in the board) in wich the
-#     cell (1 : 1) match with with the superior left corner
-#     of the board.
-#
-# # - Repr. Interna -> Criada a estrutura de dados 'coordenada'.
-#
-################################################################
-
-# Create coordinate type
-class coordinate:
-
-    # Inicializer
-    def __init__(self, line, column):
-
-        # Access to line and column
-        self.line = line
-        self.column = column
-
-    # Atribute
-    def get_line(self):
-        return self.line
-
-    # Atribute
-    def get_column(self):
-        return self.column
-
-# Creator
-def create_coordinate(line, column): 
-    '''create_coordinate  : int x int -> coordinate
-       create_coordinate(line, column) recieves two posite integers as arguments, line and column
-       respectively and returns a coordinate type element coorespondent to the cell (line : column).'''
-
-    # Test if the argument are two positive integers
-    if not(isinstance(line, (int)) and isinstance(column, (int)) and ((line > 0) and (column > 0))):
-        raise ValueError('create_coordinate: invalid arguments')
-
-    return coordinate(line, column)
-
-# Selector
-def coordinate_line(coord):
-    '''coordinate_line : coordenada -> integer
-       coordinate_line(coord) recieves as argument a cell and returns the coorespondent line.'''
-    
-    # Test if the argument is a coordinate
-    if not(is_coordinate(coord)):
-        raise ValueError('coordinate_line: invalid argument')
-
-    return coord.get_line()
-
-# Selector
-def coordinate_column(coord):
-    '''coordinate_column : coordinate -> inteiro
-       coordinate_column(coord) recieves as argument a cell and returns the coorespondent column.'''
-    
-    # Test if the argument is a coordinate
-    if not(is_coordinate(coord)):
-        raise ValueError('coordinate_column: invalid argument')
-
-    return coord.get_column()
-
-# Recognizer
-def is_coordinate(element):
-    '''is_coordinate : universal -> logic
-       is_coordinate(element) recieves an argument and returns True if the element is a coordinate
-       and return False otherwise.'''
-
-    return isinstance(element, (coordinate))
-
-# Test
-def same_coordinates(coord1, coord2):
-    '''same_coordinates : coordinate x coordinate -> logic
-       same_coordinates(coord1, coord2) recieves as arguments two coordinates and returns two if
-       the coordinates represent the same cell on the board and False otherwise'''
-
-    # Test if the arguments are two coordinates
-    if not( is_coordinate(coord1) and is_coordinate(coord2) ):
-        raise ValueError('same_coordinates: invalid arguments')
-
-    return ( ( coordinate_line(coord1) == coordinate_line(coord2) ) and 
-             ( coordinate_column(coord1) == coordinate_column(coord2) ) )
-
-# Funcao
-def coordenada_para_cadeia(coord):
-    '''coordenada_para_cadeia : coordenada -> cad. caracteres
-       coordenada_para_cadeia(coord) recebe como argumento um elemento do tipo coordenada e devolve 
-       uma cadeia de caracteres que a representa.'''
-
-    # Testa se recebe coordenada
-    if not( e_coordenada(coord) ):
-        raise ValueError('coordenada_para_cadeia: argumentos invalidos')
-
-    # Acedemos a linha e coluna
-    return ( '(' + str( coordenada_linha(coord) ) + ' : ' + str( coordenada_coluna(coord) ) + ')' )
 
 ################################################################
 #
@@ -159,6 +59,7 @@ def coordenada_para_cadeia(coord):
 #   - Repr. Interna -> Criada a estrutura de dados 'jogada'.
 #
 ################################################################
+from coordinate import *
 
 # Cria tipo jogada
 class jogada:
@@ -185,7 +86,7 @@ def cria_jogada(coord, cel):
        com valor 1 ou 2 e verfica a validade dos seus argumentos.'''
 
     # Testa se recebe um elemento do tipo coordenada e um inteiro com valor 1 ou 2
-    if not(e_coordenada(coord) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
+    if not(is_coordinate(coord) and isinstance(cel, (int)) and (cel == 1 or cel == 2)):
         raise ValueError('cria_jogada: argumentos invalidos')
 
     return jogada(coord, cel)
@@ -248,7 +149,7 @@ def jogada_para_cadeia(jog):
 
     # Primeiro acedemos a coordenada da jogada e transformamos numa cadeia de caracteres e depois 
     # acedemos a celula da jogada
-    return( str( coordenada_para_cadeia( jogada_coordenada(jog) ) ) + ' --> ' + 
+    return( str( coordinate_to_string( jogada_coordenada(jog) ) ) + ' --> ' + 
             str( jogada_valor(jog) ) )
 
 ################################################################
@@ -399,14 +300,14 @@ def tabuleiro_celula(t, c):
        branca / 2 - celula preenchida.'''
 
     # Testa se recebe tabuleiro e coordenada
-    if not( e_tabuleiro(t) and e_coordenada(c) ):
+    if not( e_tabuleiro(t) and is_coordinate(c) ):
         raise ValueError('tabuleiro_celula: argumentos invalidos')
 
     linha_max = tabuleiro_dimensoes(t)[0]
     coluna_max = tabuleiro_dimensoes(t)[1]
 
-    linha = coordenada_linha(c)
-    coluna = coordenada_coluna(c)
+    linha = coordinate_line(c)
+    coluna = coordinate_column(c)
 
     # Testa se coordenada esta dentro do tabuleiro
     if not( 0 < linha < linha_max+1 and 0 < coluna < coluna_max+1 ):
@@ -430,14 +331,14 @@ def tabuleiro_preenche_celula(t, c, e):
        especificada.'''
 
     # Testa se recebe argumentos corretos
-    if not( e_tabuleiro(t) and e_coordenada(c) and e in (0,1,2) ):
+    if not( e_tabuleiro(t) and is_coordinate(c) and e in (0,1,2) ):
         raise ValueError('tabuleiro_preenche_celula: argumentos invalidos')
 
     linha_max = tabuleiro_dimensoes(t)[0]
     coluna_max = tabuleiro_dimensoes(t)[1]
 
-    linha = coordenada_linha(c)
-    coluna = coordenada_coluna(c)
+    linha = coordinate_line(c)
+    coluna = coordinate_column(c)
 
     # Testa se coordenada esta dentro do tabuleiro
     if not( 0 < linha < linha_max+1 and 0 < coluna < coluna_max+1 ):
@@ -563,15 +464,15 @@ def escreve_tabuleiro(t):
         for coluna in range(1, qtd_colunas+1):
  
             # Vazio
-            if tabuleiro_celula(t, cria_coordenada(linha, coluna)) == 0:
+            if tabuleiro_celula(t, create_coordinate(linha, coluna)) == 0:
                 conteudo = '?'
 
             # Branco
-            elif tabuleiro_celula(t, cria_coordenada(linha, coluna)) == 1:
+            elif tabuleiro_celula(t, create_coordinate(linha, coluna)) == 1:
                 conteudo = '.'
 
             # Preenchido
-            elif tabuleiro_celula(t, cria_coordenada(linha, coluna)) == 2:
+            elif tabuleiro_celula(t, create_coordinate(linha, coluna)) == 2:
                 conteudo = 'x'
 
             # Escreve celula
@@ -620,7 +521,7 @@ def le_tabuleiro(espec):
     from ast import literal_eval
     
     # Abre ficheiro, le e fecha
-    f1 = open(espec, 'r')
+    f1 = open('../examples/'+espec, 'r')
     l1 = f1.readline()
     f1.close()
 
@@ -639,8 +540,8 @@ def pede_jogada(t):
 
     linha_max = tabuleiro_dimensoes(t)[0]
     coluna_max = tabuleiro_dimensoes(t)[1]
-    coordenada_min = coordenada_para_cadeia(cria_coordenada(1,1))
-    coordenada_max = coordenada_para_cadeia(cria_coordenada(linha_max,coluna_max))
+    coordenada_min = coordinate_to_string(create_coordinate(1,1))
+    coordenada_max = coordinate_to_string(create_coordinate(linha_max,coluna_max))
 
     # Pede jogada ao utilizador
     print('Introduza a jogada')
@@ -659,7 +560,7 @@ def pede_jogada(t):
 
         # Se for valida para o tabuleiro criamos jogada
         if ( 0 < lin < linha_max+1 and 0 < col < coluna_max+1 ):
-            return cria_jogada(cria_coordenada(lin,col),valor)
+            return cria_jogada(create_coordinate(lin,col),valor)
         else:
             return False
 
@@ -685,7 +586,7 @@ def tabuleiro_celulas_vazias(t):
         for coluna in range(1,qtd_colunas+1):
 
             # Testa celula
-            coordenada = cria_coordenada(linha,coluna)
+            coordenada = create_coordinate(linha,coluna)
             if tabuleiro_celula(t, coordenada) == 0:
                 lista.append(coordenada)
 
