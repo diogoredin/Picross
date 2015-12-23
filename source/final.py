@@ -67,7 +67,7 @@ import platform
 ################################################################
 
 # Funcao le tabuleiro
-def le_tabuleiro(espec):
+def le_tabuleiro(level, nr_gm):
     '''le_tabuleiro : cad. caracteres -> tuplo
        le_tabuleiro(espec) recebe como argumento uma cadeia de caracteres que corresponde ao nome do 
        ficheiro com os dados de especificacao do jogo, e devolve um tuplo de dois tuplos com a 
@@ -79,7 +79,7 @@ def le_tabuleiro(espec):
     from ast import literal_eval
     
     # Abre ficheiro, le e fecha
-    f1 = open('../examples/'+espec, 'r')
+    f1 = open('../resources/Levels/Level_'+str(level)+'/'+str(nr_gm)+'.txt', 'r')
     l1 = f1.readline()
     f1.close()
 
@@ -190,7 +190,7 @@ def linha_completa(especificacoes,celulas):
         return False
 
 # Funcao jogo picross
-def jogo_picross(espec):
+def jogo_picross(level, nr_gm):
     '''jogo_picross : cad. caracteres -> logico
        jogo_picross(espec) recebe como argumento uma cadeia de caracteres representando o nome do 
        ficheiro com a especificacao do tabuleiro, e permite jogar um jogo de Picross. Devolve True 
@@ -200,7 +200,7 @@ def jogo_picross(espec):
     # Verifica o sistema em que o jogo esta a correr
     system = platform.system()
     # Le ficheiro e cria tabuleiro
-    especificacoes = le_tabuleiro(espec)
+    especificacoes = le_tabuleiro(level, nr_gm)
     tabuleiro = cria_tabuleiro(especificacoes)
 
     # Enquanto o tabuleiro estiver com celulas por preencher

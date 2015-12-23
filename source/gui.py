@@ -8,11 +8,9 @@ window.resizable(width=FALSE, height=FALSE)
 window.geometry("500x500")
 window.configure(bg='black')
 
-# Create a canvas
-c = Canvas(window, height = 75, width = 300)
-filename = PhotoImage(file = '../resources/Title.png')
-image = c.create_image(32.5, 150, anchor=NE, image = filename)
+photo = PhotoImage(file = '../resources/Title.png')
+label = Label(window, image = photo)
+label.pack()
 
-c.pack()
 window.mainloop()
 
