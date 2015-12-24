@@ -41,7 +41,7 @@ else:
     else:
         list_games = []
         game = ''
-        while not (game in list_games):
+        while not ((game + '\n') in list_games):
             f1 = open('../resources/Saved_games/Saved_games_list.txt')
             name = f1.readline() 
             print ('Which game you want to continue?')

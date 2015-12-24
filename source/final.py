@@ -105,11 +105,11 @@ def pede_jogada(t):
     print('Introduza a jogada')
     coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
     if coordenada == ('save'):
-        saver (t)
+        saver (t, None)
         pede_jogada(t)
     valor = input('- valor >> ')
     if valor == ('save'):
-        saver (t)
+        saver (t, None)
         pede_jogada(t)
 
     # Se for introduzida jogada
@@ -155,7 +155,7 @@ def jogo_picross(level, nr_gm, choice, game):
 
     # Verifica o sistema em que o jogo esta a correr
     system = platform.system()
-
+    global system
     if choice == ('n'):
         # Le ficheiro e cria tabuleiro
         especificacoes = le_tabuleiro(level, nr_gm)
@@ -166,15 +166,7 @@ def jogo_picross(level, nr_gm, choice, game):
     # Enquanto o tabuleiro estiver com celulas por preencher
     while len(tabuleiro_celulas_vazias(tabuleiro)) != 0:
 
-        if system == 'Linux':
-            # Limpa a shell Linux
-            tmp = sp.call('clear',shell=True)
-        elif system == 'Darwin':
-            # Limpa a shell Mac
-            tmp = sp.call('cls',shell=True)
-        elif system == 'Windows':
-            # Limpa a shell Windows
-            os.system('cls')
+        cleaning()
 
         print('JOGO PICROSS \n \n')
 
@@ -206,3 +198,48 @@ def jogo_picross(level, nr_gm, choice, game):
         escreve_tabuleiro(tabuleiro)
         print('JOGO: O tabuleiro nao esta correto!')
         return False
+
+def cleaning ():
+    if system == 'Linux':
+        # Limpa a shell Linux
+        tmp = sp.call('clear',shell=True)
+    elif system == 'Darwin':
+        # Limpa a shell Mac
+        tmp = sp.call('cls',shell=True)
+    elif system == 'Windows':
+        # Limpa a shell Windows
+        os.system('cls')
+
+
+def saver(t, flag):
+    cleaning()
+    print ('PICROSS GAME \n \n ')
+
+    if flag == 'Empty':
+        print('Name can\'t be empty')
+
+    if flag == 'Space':
+        print('Name can\'t have spaces')
+    
+    game_name = input('Name your game\n>>> ')
+    if game_name == '':
+        flag = 'Empty'
+        saver (t, flag)
+
+    if ' ' in game_name:
+        flag = 'Space'
+        saver (t, flag)
+
+    else:
+        f1 = open('../resources/Saved_games/'+ game_name + '.txt', 'w')
+        spec = tabuleiro_especificacoes(t)
+        cells = tabuleiro_celulas(t)
+        f1.write (str(spec)+'\n')
+        f1.write (str(cells))
+        f1.close()
+        f1 = open('../resources/Saved_games/Saved_games_list.txt', 'a')
+        f1.write(game_name + '\n')
+        f1.close()
+        
+        cleaning()
+        print('PICROSS GAME \n \n')
