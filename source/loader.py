@@ -28,7 +28,7 @@ if choice == 'n':
     f1.close()
 
     nr_gm = random.randint(1,lv_qt)
-    jogo_picross(level, nr_gm)
+    jogo_picross(level, nr_gm, choice, '')
 
 else:
     print ('PICROSS GAME \n \n')
@@ -52,3 +52,4 @@ else:
             f1.close()
             print ('\n')
             game = input ('>>> ')
+        jogo_picross (0, 0, choice,  game)

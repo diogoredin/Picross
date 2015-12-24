@@ -135,7 +135,6 @@ def tabuleiro_celulas_vazias(t):
     # Dimensoes
     qtd_linhas = tabuleiro_dimensoes(t)[0]
     qtd_colunas = tabuleiro_dimensoes(t)[1]
-
     # Lista celulas vazias
     lista = []
 
@@ -189,8 +188,21 @@ def linha_completa(especificacoes,celulas):
     else:
         return False
 
+
+def continue_game(game):
+    from ast import literal_eval
+    
+    # Abre ficheiro, le e fecha
+    f1 = open('../resources/Saved_games/'+ game +'.txt', 'r')
+    spec = f1.readline()
+    cells = f1. readline()
+    f1.close()
+    board = cria_tabuleiro(literal_eval(spec))
+    board = tabuleiro_preenche_celulas(board, literal_eval(cells))
+    return board
+
 # Funcao jogo picross
-def jogo_picross(level, nr_gm):
+def jogo_picross(level, nr_gm, choice, game):
     '''jogo_picross : cad. caracteres -> logico
        jogo_picross(espec) recebe como argumento uma cadeia de caracteres representando o nome do 
        ficheiro com a especificacao do tabuleiro, e permite jogar um jogo de Picross. Devolve True 
@@ -199,10 +211,14 @@ def jogo_picross(level, nr_gm):
 
     # Verifica o sistema em que o jogo esta a correr
     system = platform.system()
-    # Le ficheiro e cria tabuleiro
-    especificacoes = le_tabuleiro(level, nr_gm)
-    tabuleiro = cria_tabuleiro(especificacoes)
 
+    if choice == ('n'):
+        # Le ficheiro e cria tabuleiro
+        especificacoes = le_tabuleiro(level, nr_gm)
+        tabuleiro = cria_tabuleiro(especificacoes)
+    else:
+        tabuleiro = continue_game(game)
+        
     # Enquanto o tabuleiro estiver com celulas por preencher
     while len(tabuleiro_celulas_vazias(tabuleiro)) != 0:
 

@@ -65,6 +65,10 @@ class tabuleiro:
         self.celulas[linha-1][coluna-1] = e
         return self
 
+    def preenche_celulas(self, cells):
+        self.celulas = cells
+        return self
+
 # Construtor
 def cria_tabuleiro(t):
     '''cria_tabuleiro : tuplo -> tabuleiro
@@ -193,6 +197,9 @@ def tabuleiro_preenche_celula(t, c, e):
         raise ValueError('tabuleiro_preenche_celula: argumentos invalidos')
 
     return t.preenche_celula(linha,coluna,e)
+
+def tabuleiro_preenche_celulas(board, cells):
+    return board.preenche_celulas(cells)
 
 # Reconhecedor
 def e_tabuleiro(t):
