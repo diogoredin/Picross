@@ -104,7 +104,13 @@ def pede_jogada(t):
     # Pede jogada ao utilizador
     print('Introduza a jogada')
     coordenada = input('- coordenada entre ' + coordenada_min + ' e ' + coordenada_max + ' >> ')
+    if coordenada == ('save'):
+        saver (t)
+        pede_jogada(t)
     valor = input('- valor >> ')
+    if valor == ('save'):
+        saver (t)
+        pede_jogada(t)
 
     # Se for introduzida jogada
     if (coordenada != '' and valor != ''):
@@ -122,71 +128,9 @@ def pede_jogada(t):
         else:
             return False
 
-# Funcao tabuleiro celulas vazias
-def tabuleiro_celulas_vazias(t):
-    '''tabuleiro_celulas_vazias : tabuleiro -> lista
-       tabuleiro_celulas_vazias(t) recebe como recebe como argumento um elemento do tipo tabuleiro e 
-       devolve uma lista com as coordenadas das celulas do tabuleiro que estao vazias.'''
 
-    # Testa se recebe tabuleiro
-    if not(e_tabuleiro(t)):
-        raise ValueError('tabuleiro_celulas_vazias: argumentos invalidos')
 
-    # Dimensoes
-    qtd_linhas = tabuleiro_dimensoes(t)[0]
-    qtd_colunas = tabuleiro_dimensoes(t)[1]
-    # Lista celulas vazias
-    lista = []
 
-    # Percorre todas as celulas
-    for linha in range(1,qtd_linhas+1):
-        for coluna in range(1,qtd_colunas+1):
-
-            # Testa celula
-            coordenada = create_coordinate(linha,coluna)
-            if tabuleiro_celula(t, coordenada) == 0:
-                lista.append(coordenada)
-
-    return lista
-
-# Funcao linha completa
-def linha_completa(especificacoes,celulas):
-    '''linha_completa : tuplo x lista -> logico
-       linha_completa(t) recebe como argumento um tuplo com a especificacao de uma linha ou coluna, e 
-       uma lista com os conteudos das celulas de uma linha / coluna, e verifica se a linha / coluna em 
-       questao satisfaz a especificacao recebida.'''
-
-    # Lista com o numero de blocos seguidos de celulas preenchidas ("especificacoes")
-    lista_ocorrencias = []
-
-    somador = 0
-
-    # Por cada celula dada
-    for celula in range(0, len(celulas)):
-
-        # Se a celula esta preenchida registamos a ocorrencia num somador
-        if celulas[celula] == 2:
-            somador += 1
-
-        # Se a celula nao esta preenchida fazemos reset ao somador e registamos o valor que tinha
-        # (que corresponde ao numero de celulas preenchidas seguidas que encontramos)
-        else:
-            if somador != 0:
-                lista_ocorrencias.append(somador)
-                somador = 0
-        
-    # Caso fossem todas preenchidas temos de passar o somador na mesma
-    if somador != 0:
-        lista_ocorrencias.append(somador)
-
-    # Se ha celulas vazias a linhas nao esta completa
-    if not(any(celulas[celula] == 0 for celula in range(0, len(celulas)))):
-
-        # Se os blocos de celulas preenchidas sao iguais as especificacoes, a linha / coluna esta correta
-        return (especificacoes == tuple(lista_ocorrencias))
-
-    else:
-        return False
 
 
 def continue_game(game):
@@ -232,8 +176,9 @@ def jogo_picross(level, nr_gm, choice, game):
             # Limpa a shell Windows
             os.system('cls')
 
-        print('JOGO PICROSS')
+        print('JOGO PICROSS \n \n')
 
+        print('To save write \'save\' anytime')
         # Mostra no ecra o tabuleiro
         escreve_tabuleiro(tabuleiro)
 
